@@ -26,7 +26,7 @@ function generarMazo(baraja, cantidadDeMazos){
     }
    
         
-    // mezcla el mazo de cartas
+    // mezcla N mazos de cartas
     while(barajaOriginal.length>0){
         let pos = parseInt(Math.random()*(barajaOriginal.length)) ;
         baraja.push(barajaOriginal[pos]);        
