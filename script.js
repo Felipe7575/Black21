@@ -7,7 +7,6 @@ devuelve la cantidad de puntos.
 */
 
 const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
-
 let barajaOriginal=[];
 
 class cartas{
@@ -58,11 +57,16 @@ function pedirCartas(cantidad, baraja,cartasJugador){
 
 function sumarPuntos(cartasJugador){
     let puntos=0;
+    
+    
+    // Busca las cartas que no son ASES y suma el valor de la carta al puntaje
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero>=2){
             puntos+=cartasJugador[i].numero;
         }
     }
+    // Busca las cartas que son ASES y suma 11 si al sumar la carta el puntaje es 
+    // menor a 21 , en caso contrario suma 1
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero==1){
             if(puntos+11 <= 21){
@@ -81,6 +85,7 @@ function juegaJugador(mazo){
     let cartasJugador = [];
     let puntosActual=0;
 
+    // Entrega dos cartas para iniciar a jugar
     cartasJugador = pedirCartas(2, mazo, cartasJugador);
     for(let i=0; i<cartasJugador.length; i++){
         cartasJugador[i].preguntarPalo(this);
@@ -90,9 +95,11 @@ function juegaJugador(mazo){
     }
     puntosActual = sumarPuntos(cartasJugador);  
     console.log("--------------------------");
+    // Si el puntaje es menor a 21 pregunta al jugador si quiere plantarse o pide carta
     if(puntosActual<21){
         cant=prompt("Plantarse =-1 Carta = 1?");
         while(cant!=-1 && puntosActual<21){
+            //console.clear();
             cartasJugador = pedirCartas(cant, mazo, cartasJugador);
             for(let i=0; i<cant; i++){
                 mazo.shift();
@@ -112,6 +119,7 @@ function juegaJugador(mazo){
 
     return puntosActual;
 }
+
 
 
 
