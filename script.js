@@ -1,3 +1,11 @@
+/* La idea del programa es generar un simulador de BlackJack 
+Hasta el momento el codigo permite :
+    - Que el usuario pida cartas hasta ingresar -1 o que supere 21
+    - Suma los puntos de las cartas entregadas
+Por consola se puede ver las cartas entregadas y al dejar de pedir o superar los 21 se 
+devuelve la cantidad de puntos.
+*/
+
 const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
 
 let barajaOriginal=[];
