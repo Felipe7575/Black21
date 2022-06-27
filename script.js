@@ -120,17 +120,82 @@ function juegaJugador(mazo){
     return puntosActual;
 }
 
+function juegaCrupier(mazo, cartasCrupier, puntosJugador){
+    let cant;
+    let puntosCrupier=0;
+    if(cartasCrupier.length==0){
+         // Entrega dos cartas para iniciar a jugar
+         cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
+        console.log("------Carta Crupier-------");
+        cartasCrupier[0].preguntarPalo(this);
+        console.log("------------------------");
+        mazo.shift();
+        return cartasCrupier;
+    }
+    puntosCrupier = sumarPuntos(cartasCrupier);  
+    // Si el puntaje es menor a 21 pregunta al jugador si quiere plantarse o pide carta
+    if(puntosCrupier<puntosJugador){
+        while(puntosCrupier<17 && puntosCrupier<puntosJugador){
+            //console.clear();
+            cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
+            mazo.shift();
+            console.log("--------------------------");
+            for(let i=0; i<cartasCrupier.length; i++){
+                cartasCrupier[i].preguntarPalo(this);
+            }
+        
+            puntosCrupier = sumarPuntos(cartasCrupier);  
+            console.log("--------------------------");
 
+           
+            
+        }
+     }
 
+    return cartasCrupier;
+}
+
+function eligeGanador(){
+    if(puntosCrupier<=21){
+        if(puntosCrupier>puntosJugador){
+            console.log("Gana la casa");
+        }
+        if(puntosCrupier<puntosJugador){
+            console.log("Pierde la casa");
+        }
+        if(puntosCrupier===puntosJugador){
+            console.log("EMPATE");
+        }
+    }
+    else{
+        console.log("Pierde la casa"); 
+    }
+}
 
 let mazo=[];
+let mazoCrupier=[];
+
 const cantidadDeMazos = 1;
 let puntosJugador=0;
+let puntosCrupier=0; 
 
 generarMazo(mazo, cantidadDeMazos);
 
+mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+
 puntosJugador = juegaJugador(mazo);
-console.log(puntosJugador)
+if(puntosJugador<=21){
+    mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+    puntosCrupier = sumarPuntos(mazoCrupier);
+    eligeGanador(puntosJugador,puntosCrupier);
+}
+else{
+    console.log("Gana la casa");
+}
+
+
+
+
 
 
 
