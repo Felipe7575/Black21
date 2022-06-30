@@ -16,3 +16,21 @@
     align-items: center;
     justify-content: center;
 }
+
+.sinCarta{
+    background-image: none;
+}
+.divCarta{
+    width: 100%;
+    height: 100%;
+}
+.carta{
+    width: 100%;
+    height: 100%;
+}
+
+.P0{
+    background-image: url("./assets/images/CartasPoker/AP.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
