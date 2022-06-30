@@ -1,0 +1,18 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  
+}
+
+.MesaDeJuego{
+    height: 100vh;
+    background-color: rgb(240, 234, 234);
+    background-image: url("./assets/images/wepik--2022530-10208.png");
+}
+
+.cartaJugador,.cartaCrup{
+    height: 50vh;
+    align-items: center;
+    justify-content: center;
+}
