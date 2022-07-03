@@ -1,0 +1,28 @@
+@import url("./backCartas.css");
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  
+}
+
+.MesaDeJuego{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(240, 234, 234);
+    background-image: url("../assets/images/wepik--2022530-10208.png");
+}
+
+.mesaJugador,.mesaCrupier{
+    width: 100vh;
+    height: 40wh;
+}
+.Botones{
+    width: 100vh;
+    height: 20wh;
+}
+.carta{
+    height: 350px;
+    width: 251px !important; 
+}
+

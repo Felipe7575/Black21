@@ -53,8 +53,6 @@ function pedirCartas(cantidad, baraja,cartasJugador){
     return cartasJugador;
 }
 
-
-
 function sumarPuntos(cartasJugador){
     let puntos=0;
     
@@ -80,44 +78,39 @@ function sumarPuntos(cartasJugador){
     return puntos;
 };
     
-function juegaJugador(mazo){
+function juegaJugador(mazo, cartasJugador){
     let cant;
-    let cartasJugador = [];
     let puntosActual=0;
-
-    // Entrega dos cartas para iniciar a jugar
-    cartasJugador = pedirCartas(2, mazo, cartasJugador);
-    for(let i=0; i<cartasJugador.length; i++){
-        cartasJugador[i].preguntarPalo(this);
-    }
-    for(let i=0; i<2; i++){
-        mazo.shift();
-    }
-    puntosActual = sumarPuntos(cartasJugador);  
-    console.log("--------------------------");
-    // Si el puntaje es menor a 21 pregunta al jugador si quiere plantarse o pide carta
-    if(puntosActual<21){
-        cant=prompt("Plantarse =-1 Carta = 1?");
-        while(cant!=-1 && puntosActual<21){
-            //console.clear();
-            cartasJugador = pedirCartas(cant, mazo, cartasJugador);
-            for(let i=0; i<cant; i++){
-                mazo.shift();
-            }
-            for(let i=0; i<cartasJugador.length; i++){
-                cartasJugador[i].preguntarPalo(this);
-            }
-        
-            puntosActual = sumarPuntos(cartasJugador);  
-            console.log("--------------------------");
-
-            if(puntosActual<21){
-                cant=prompt("Plantarse =-1 Carta = 1?"); 
-            }
+    
+    if(cartasJugador.length==0){
+        // Entrega dos cartas para iniciar a jugar
+        cartasJugador = pedirCartas(2, mazo, cartasJugador);
+        for(let i=0; i<cartasJugador.length; i++){
+            cartasJugador[i].preguntarPalo(this);
         }
-     }
+        for(let i=0; i<2; i++){
+            mazo.shift();
+        }
+        
+        console.log("--------------------------");
+    }
+    else{
+        console.log("ACA");
+        cartasJugador = pedirCartas(1, mazo, cartasJugador);
+        mazo.shift();
+        
+        for(let i=0; i<cartasJugador.length; i++){
+            cartasJugador[i].preguntarPalo(this);
+        }
+        console.log("--------------------------");
 
-    return puntosActual;
+    }
+    puntosActual = sumarPuntos(cartasJugador);
+    
+    puntosActual = sumarPuntos(cartasJugador);
+    console.log(puntosActual);
+    console.log("------------------------");
+    return cartasJugador;
 }
 
 function juegaCrupier(mazo, cartasCrupier, puntosJugador){
@@ -155,7 +148,7 @@ function juegaCrupier(mazo, cartasCrupier, puntosJugador){
     return cartasCrupier;
 }
 
-function eligeGanador(){
+function eligeGanador(puntosJugador,puntosCrupier){
     if(puntosCrupier<=21){
         if(puntosCrupier>puntosJugador){
             console.log("Gana la casa");
@@ -172,26 +165,82 @@ function eligeGanador(){
     }
 }
 
+function actualizaCartas(mazoJugador,mazoCrupier){
+    let cartasCrupier =[];
+    let cartasJugador =[];
+    let j=1;
+    for(let i=0;i<4; i++){
+        cartasJugador[i]=document.getElementById("cartaJug"+j);
+        j++;
+    }
+    
+    
+
+    j=1;
+    for(let i=0;i<4; i++){
+        cartasCrupier[i]=document.getElementById("cartaCrup"+j);
+        j++;
+    }
+  
+
+    for(let i=0;i<mazoJugador.length; i++){  
+        cartasJugador[i].className = "carta" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
+    }
+    for(let i=0;i<mazoCrupier.length; i++){  
+        cartasCrupier[i].className = "carta" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
+    }
+    if(mazoCrupier.length==1){
+        cartasCrupier[1].className = "carta" + " "+"backCarta";
+    }
+ 
+    
+}
+
 let mazo=[];
 let mazoCrupier=[];
+let cartasJugador=[];
+let botonPedir, botonPlantarse;
 
-const cantidadDeMazos = 1;
-let puntosJugador=0;
-let puntosCrupier=0; 
+window.onload = () => {
+    botonPedir=document.getElementById("pedir");
+    botonPlantarse=document.getElementById("plantarse");
+    
 
-generarMazo(mazo, cantidadDeMazos);
+    const cantidadDeMazos = 1;
+    let puntosJugador=0;
+    let puntosCrupier=0; 
 
-mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+    generarMazo(mazo, cantidadDeMazos);
 
-puntosJugador = juegaJugador(mazo);
-if(puntosJugador<=21){
     mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
-    puntosCrupier = sumarPuntos(mazoCrupier);
-    eligeGanador(puntosJugador,puntosCrupier);
+
+    botonPedir.onclick = () => {
+        puntosJugador=sumarPuntos(cartasJugador);
+        if(puntosJugador<21)
+            cartasJugador = juegaJugador(mazo, cartasJugador);
+        actualizaCartas(cartasJugador,mazoCrupier);
+        puntosJugador=sumarPuntos(cartasJugador);
+        if(puntosJugador>21){
+            console.log("Gana la casa");
+        }
+    }
+
+    botonPlantarse.onclick = () => {
+        if(puntosJugador<=21){
+            puntosJugador=sumarPuntos(cartasJugador);
+            mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+            puntosCrupier = sumarPuntos(mazoCrupier);
+            actualizaCartas(cartasJugador,mazoCrupier);
+            eligeGanador(puntosJugador,puntosCrupier);
+        }
+        else{
+            console.log("Gana la casa");
+        }
+    }
+
 }
-else{
-    console.log("Gana la casa");
-}
+
+
 
 
 
