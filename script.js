@@ -60,7 +60,13 @@ function sumarPuntos(cartasJugador){
     // Busca las cartas que no son ASES y suma el valor de la carta al puntaje
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero>=2){
-            puntos+=cartasJugador[i].numero;
+            if(cartasJugador[i].numero>=10){
+                puntos+=10;
+            }
+            else{
+                puntos+=cartasJugador[i].numero; 
+            }
+            
         }
     }
     // Busca las cartas que son ASES y suma 11 si al sumar la carta el puntaje es 
@@ -170,7 +176,7 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
     }
 }
 
-function actualizaCartas(mazoJugador,mazoCrupier){
+function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
     let cartasCrupier =[];
     let cartasJugador =[];
     let j=1;
@@ -178,25 +184,31 @@ function actualizaCartas(mazoJugador,mazoCrupier){
         cartasJugador[i]=document.getElementById("cartaJug"+j);
         j++;
     }
-    
-    
-
     j=1;
     for(let i=0;i<4; i++){
         cartasCrupier[i]=document.getElementById("cartaCrup"+j);
         j++;
     }
-  
-
-    for(let i=0;i<mazoJugador.length; i++){  
-        cartasJugador[i].className = "carta" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
+    if(reiniciar==0){
+        for(let i=0;i<mazoJugador.length; i++){  
+            cartasJugador[i].className = "carta" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
+        }
+        for(let i=0;i<mazoCrupier.length; i++){  
+            cartasCrupier[i].className = "carta" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
+        }
+        if(mazoCrupier.length==1){
+            cartasCrupier[1].className = "carta" + " "+"backCarta";
+        }
     }
-    for(let i=0;i<mazoCrupier.length; i++){  
-        cartasCrupier[i].className = "carta" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
+    else{
+        for(let i=0;i<4; i++){  
+            cartasJugador[i].className = "carta" + " "+"blank";
+        }
+        for(let i=0;i<4; i++){  
+            cartasCrupier[i].className = "carta" + " "+"blank";
+        }
     }
-    if(mazoCrupier.length==1){
-        cartasCrupier[1].className = "carta" + " "+"backCarta";
-    }
+        
  
     
 }
@@ -204,12 +216,14 @@ function actualizaCartas(mazoJugador,mazoCrupier){
 let mazo=[];
 let mazoCrupier=[];
 let cartasJugador=[];
-let botonPedir, botonPlantarse,cartelGanaPierde;
+let botonPedir, botonPlantarse,cartelGanaPierde,botonReiniciar;
+
 
 
 window.onload = () => {
     botonPedir=document.getElementById("pedir");
     botonPlantarse=document.getElementById("plantarse");
+    botonReiniciar=document.getElementById("reiniciar");
     cartelGanaPierde=document.getElementById("GanaPierde");
 
     const cantidadDeMazos = 1;
@@ -217,15 +231,17 @@ window.onload = () => {
     let puntosCrupier=0; 
 
     generarMazo(mazo, cantidadDeMazos);
-
     mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+
     //Boton de pedir (solo funciona si el jugador no a tocado el boton de plantarse)
     botonPedir.onclick = () => {
         if(mazoCrupier.length==1){
             puntosJugador=sumarPuntos(cartasJugador);
             if(puntosJugador<21)
                 cartasJugador = juegaJugador(mazo, cartasJugador);
-            actualizaCartas(cartasJugador,mazoCrupier);
+
+            actualizaCartas(cartasJugador,mazoCrupier,0);
+
             puntosJugador=sumarPuntos(cartasJugador);
             if(puntosJugador>21){
                 console.log("Gana la casa");
@@ -240,7 +256,7 @@ window.onload = () => {
                 puntosJugador=sumarPuntos(cartasJugador);
                 mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
                 puntosCrupier = sumarPuntos(mazoCrupier);
-                actualizaCartas(cartasJugador,mazoCrupier);
+                actualizaCartas(cartasJugador,mazoCrupier,0);
                 eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
             }
             else{
@@ -250,6 +266,19 @@ window.onload = () => {
             }
         }        
     }
+
+    botonReiniciar.onclick = () => {
+            mazo=[];
+            mazoCrupier=[];
+            cartasJugador=[];
+            puntosJugador=0;
+            puntosCrupier=0; 
+            generarMazo(mazo, cantidadDeMazos);
+            mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+            actualizaCartas(cartasJugador,mazoCrupier,1);
+            cartelGanaPierde.className="CartelGanaPierdeHide ";
+    }
+
 
 
 }
