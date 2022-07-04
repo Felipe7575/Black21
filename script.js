@@ -1,9 +1,9 @@
 /* La idea del programa es generar un simulador de BlackJack 
 Hasta el momento el codigo permite :
-    - Que el usuario pida cartas hasta ingresar -1 o que supere 21
+    -Permite que el usuario pida cartas 
+    -Reparte un total de hasta 4 cartas (Tengo que ver como solucionar esto)
     - Suma los puntos de las cartas entregadas
-Por consola se puede ver las cartas entregadas y al dejar de pedir o superar los 21 se 
-devuelve la cantidad de puntos.
+    - Cartel de quien gana el juego 
 */
 
 const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
@@ -165,6 +165,8 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
     }
     else{
         console.log("Pierde la casa"); 
+        cartelGanaPierde.className="CartelGanaPierdeNoHide CartelPierde";
+        
     }
 }
 
@@ -217,31 +219,38 @@ window.onload = () => {
     generarMazo(mazo, cantidadDeMazos);
 
     mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
-
+    //Boton de pedir (solo funciona si el jugador no a tocado el boton de plantarse)
     botonPedir.onclick = () => {
-        puntosJugador=sumarPuntos(cartasJugador);
-        if(puntosJugador<21)
-            cartasJugador = juegaJugador(mazo, cartasJugador);
-        actualizaCartas(cartasJugador,mazoCrupier);
-        puntosJugador=sumarPuntos(cartasJugador);
-        if(puntosJugador>21){
-            console.log("Gana la casa");
+        if(mazoCrupier.length==1){
+            puntosJugador=sumarPuntos(cartasJugador);
+            if(puntosJugador<21)
+                cartasJugador = juegaJugador(mazo, cartasJugador);
+            actualizaCartas(cartasJugador,mazoCrupier);
+            puntosJugador=sumarPuntos(cartasJugador);
+            if(puntosJugador>21){
+                console.log("Gana la casa");
+                cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
+            }
         }
+    }
+    //Boton de plantarse (solo funciona si el jugador a jugado al menos una vez)
+    botonPlantarse.onclick = () => {
+        if(cartasJugador.length>0){
+            if(puntosJugador<=21){
+                puntosJugador=sumarPuntos(cartasJugador);
+                mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
+                puntosCrupier = sumarPuntos(mazoCrupier);
+                actualizaCartas(cartasJugador,mazoCrupier);
+                eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
+            }
+            else{
+                cartelGanaPierde.className="CartelGana";
+                cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
+                console.log("Gana la casa");
+            }
+        }        
     }
 
-    botonPlantarse.onclick = () => {
-        if(puntosJugador<=21){
-            puntosJugador=sumarPuntos(cartasJugador);
-            mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
-            puntosCrupier = sumarPuntos(mazoCrupier);
-            actualizaCartas(cartasJugador,mazoCrupier);
-            eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
-        }
-        else{
-            cartelGanaPierde.className="CartelGana";
-            console.log("Gana la casa");
-        }
-    }
 
 }
 
