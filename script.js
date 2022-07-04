@@ -229,6 +229,7 @@ window.onload = () => {
     const cantidadDeMazos = 1;
     let puntosJugador=0;
     let puntosCrupier=0; 
+    let partidaTerminada=0;
 
     generarMazo(mazo, cantidadDeMazos);
     mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
@@ -245,6 +246,7 @@ window.onload = () => {
             puntosJugador=sumarPuntos(cartasJugador);
             if(puntosJugador>21){
                 console.log("Gana la casa");
+                partidaTerminada=1;
                 cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
             }
         }
@@ -258,16 +260,19 @@ window.onload = () => {
                 puntosCrupier = sumarPuntos(mazoCrupier);
                 actualizaCartas(cartasJugador,mazoCrupier,0);
                 eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
+                partidaTerminada=1;
             }
             else{
                 cartelGanaPierde.className="CartelGana";
                 cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
                 console.log("Gana la casa");
+                partidaTerminada=1;
             }
         }        
     }
 
     botonReiniciar.onclick = () => {
+        if(partidaTerminada==1){
             mazo=[];
             mazoCrupier=[];
             cartasJugador=[];
@@ -277,6 +282,8 @@ window.onload = () => {
             mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
             actualizaCartas(cartasJugador,mazoCrupier,1);
             cartelGanaPierde.className="CartelGanaPierdeHide ";
+            partidaTerminada=0;
+        }
     }
 
 
