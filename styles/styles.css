@@ -25,4 +25,35 @@
     height: 350px;
     width: 251px !important; 
 }
-
+.CartelGanaPierdeHide{
+    display: none;
+}
+.CartelGanaPierdeNoHide{
+    display:block;
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    right: 30%;
+    
+    
+}
+.CartelGana{
+   background-image: url("../assets/images/Gana.png");
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+   
+}
+.CartelPierde{
+   background-image: url("../assets/images/Pierde.png");
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+.CartelEmpate{
+   background-image: url("../assets/images/Empate-01.png");
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+}
