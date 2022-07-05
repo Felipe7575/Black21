@@ -177,40 +177,35 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
 }
 
 function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
-    let cartasCrupier =[];
-    let cartasJugador =[];
+    let figuraCrupier =[];
+    let figuraJugador =[];
     let j=1;
-    for(let i=0;i<4; i++){
-        cartasJugador[i]=document.getElementById("cartaJug"+j);
-        j++;
-    }
-    j=1;
-    for(let i=0;i<4; i++){
-        cartasCrupier[i]=document.getElementById("cartaCrup"+j);
-        j++;
-    }
+    figuraCrupier=document.getElementsByClassName("cartaCrup"); 
+    figuraJugador=document.getElementsByClassName("cartaJug"); 
+    
     if(reiniciar==0){
         for(let i=0;i<mazoJugador.length; i++){  
-            cartasJugador[i].className = "carta" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
+            figuraJugador[i].className = "carta cartaJug" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
         }
         for(let i=0;i<mazoCrupier.length; i++){  
-            cartasCrupier[i].className = "carta" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
+            figuraCrupier[i].className = "carta cartaCrup" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
         }
         if(mazoCrupier.length==1){
-            cartasCrupier[1].className = "carta" + " "+"backCarta";
-        }
+            figuraCrupier[1].className = "carta cartaCrup"+ " "+"backCarta";
+        }   
     }
     else{
-        for(let i=0;i<4; i++){  
-            cartasJugador[i].className = "carta" + " "+"blank";
-        }
-        for(let i=0;i<4; i++){  
-            cartasCrupier[i].className = "carta" + " "+"blank";
-        }
+        figuraCrupier=document.getElementsByClassName("cartaCrup");
+        console.log(figuraCrupier);
+        for(let i=0;i<figuraCrupier.length; i++){  
+            figuraCrupier[i].className = "carta cartaCrup" + " "+"blank";
+        } 
+        figuraJugador=document.getElementsByClassName("cartaJug");
+        console.log(figuraJugador);
+        for(let i=0;i<figuraJugador.length; i++){  
+            figuraJugador[i].className = "carta cartaJug" + " "+"blank";
+        } 
     }
-        
- 
-    
 }
 
 let mazo=[];
