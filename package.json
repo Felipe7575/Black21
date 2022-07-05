@@ -5,7 +5,7 @@
   "main": "script.js",
   "scripts": {
     "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
-    "build": "[my-framework] build --output public"
+    "build": "webpack --config webpack.config.js"
     
   },
   "repository": {

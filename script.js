@@ -6,6 +6,8 @@ Hasta el momento el codigo permite :
     - Cartel de quien gana el juego 
 */
 
+
+
 const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
 let barajaOriginal=[];
 
@@ -305,9 +307,7 @@ function saldoLocalStorage(escribe) {
     }
     else{
         localStorage.setItem("saldo",escribe);
-    }
-    
-
+    }  
 }
 
 let mazo=[];
@@ -316,7 +316,7 @@ let cartasJugador=[];
 let botonPedir, botonPlantarse,cartelGanaPierde,botonReiniciar;
 localStorage.clear();
 let saldoActual = 0;
-
+localStorage.setItem('saldoActual', 1000);
 // Revisa si tiene saldo anterior sino lo pone en 0
 saldoActual = saldoLocalStorage(-1);
 
@@ -325,6 +325,7 @@ saldoActual = saldoLocalStorage(-1);
 
 
 window.onload = () => {
+    
     botonPedir=document.getElementById("pedir");
     botonPlantarse=document.getElementById("plantarse");
     botonReiniciar=document.getElementById("reiniciar");
