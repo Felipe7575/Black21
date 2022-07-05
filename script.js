@@ -198,6 +198,7 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
     figuraJugador=document.getElementsByClassName("cartaJug"); 
     // Revisa si la cantidad de cartas en la pantalla ("CANTIDAD DE DIVS") es mayor a la cantidad de 
     // cartas por mazo de jugador y crupier. Si la CANT es menor se crea nuevos divs
+    console.log("Cantidad de posiciones"+ figuraCrupier.length + " cantidad de cartas " + mazoCrupier.length);
     if(figuraJugador.length < mazoJugador.length || figuraCrupier.length < mazoCrupier.length){
         if(figuraJugador.length < mazoJugador.length ){
             const cartaNueva = document.getElementById("divMesaJugador");
@@ -209,12 +210,18 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
             cartaNueva.appendChild(modeloCarta);
         }
         if(figuraCrupier.length < mazoCrupier.length){
-            const cartaNueva = document.getElementsByClassName("mesaCrup"); 
-            let modeloCarta = document.createElement("div");
-            modeloCarta.className = "col  m-3 "; 
-            modeloCarta.innerHTML = ` <div class="carta cartaCrup" >
-                                      </div>
-                                     `;
+            const repe = mazoCrupier.length-figuraCrupier.length
+            console.log(repe);
+            for(let i=0; i< repe ; i++) {
+                let cartaNueva = document.getElementById("divMesaCrup");
+                let modeloCarta = document.createElement("div");
+                modeloCarta.className = "col  m-3 "; 
+                modeloCarta.innerHTML = ` <div class="carta cartaCrup" >
+                                        </div>
+                                        `;                    
+                cartaNueva.appendChild(modeloCarta);
+            }
+                
         }
     }
     // Pregunta si el usuario apreto el boton Reiniciar 
@@ -232,14 +239,35 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
         }   
     }
     else{
-        figuraCrupier=document.getElementsByClassName("cartaCrup");
-        for(let i=0;i<figuraCrupier.length; i++){  
-            figuraCrupier[i].className = "carta cartaCrup" + " "+"blank";
-        } 
-        figuraJugador=document.getElementsByClassName("cartaJug");
-        for(let i=0;i<figuraJugador.length; i++){  
-            figuraJugador[i].className = "carta cartaJug" + "  "+"blank";
-        } 
+        const contenedor = document.getElementById("contenedorDeCartas");
+        //Devuelve el html al estado inicial
+        contenedor.innerHTML= ` <div class="row mesa mesaCrup  " id="divMesaCrup">
+                                    <div class="col m-3  ">
+                                        <div class="carta cartaCrup" >
+
+                                        </div>
+                                    </div>
+                                    <div class="col  m-3  ">
+                                        <div class="carta cartaCrup" >
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mesa mesaJugador " id="divMesaJugador">
+                                        <div class="col  m-3  ">
+                                            <div class="carta cartaJug" >
+
+                                            </div>
+                                        </div>
+                                        <div class="col  m-3  ">
+                                            <div class="carta cartaJug" >
+
+                                            </div>
+                                        </div>
+                                        
+                                </div>`; 
     }
 }
 

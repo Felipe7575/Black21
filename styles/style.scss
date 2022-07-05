@@ -1,4 +1,4 @@
-@import url("./backCartas.css");
+@import './backCartas.scss';
 *{
     padding: 0;
     margin: 0;
@@ -14,10 +14,13 @@
     flex-wrap: nowrap;
 }
 
-.mesaJugador,.mesaCrupier{
-    width: 100vh;
-    height: 350px;
+.mesaJugador,.mesaCrup{
+    width: fit-content;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
     flex-wrap: nowrap;
+    margin-bottom: 1%;
 }
 .Botones{
     width: 100vw;
@@ -25,7 +28,7 @@
 }
 .carta{
     height: 350px;
-    width: 251px !important; 
+    width: 251px; 
 }
 .CartelGanaPierdeHide{
     display: none;
@@ -36,9 +39,7 @@
     width: 500px;
     height: 500px;
     top: 20%;
-    right: 30%;
-    
-    
+    right: 30%;  
 }
 .CartelGana{
    background-image: url("../assets/images/Gana.png");
@@ -59,3 +60,4 @@
    background-repeat: no-repeat;
    background-position: center;
 }
+
