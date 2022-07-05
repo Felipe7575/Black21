@@ -19,7 +19,7 @@ class cartas{
     }
 }
 
-
+//Funcion que genera N cantidad de baraja de cartas, con su correspondiente numero y palo, devuelve array con el mazo
 function generarMazo(baraja, cantidadDeMazos){
     // genera Z mazos de cartas
     for(let z=0; z<cantidadDeMazos; z++){
@@ -46,13 +46,14 @@ function generarMazo(baraja, cantidadDeMazos){
     }*/
     
 }
+// Funcion que entrega N cantidad de cartas a quien se la solicite, devuelve un arrat con als cartas
 function pedirCartas(cantidad, baraja,cartasJugador){
     for(let i=0; i<cantidad; i++){
         cartasJugador.push(baraja[i]);
     }
     return cartasJugador;
 }
-
+// Suma los puntos de las cartas que se le paso como parametro, devulve el puntaje entero
 function sumarPuntos(cartasJugador){
     let puntos=0;
     
@@ -83,7 +84,7 @@ function sumarPuntos(cartasJugador){
     }
     return puntos;
 };
-    
+//Funcion que controla cuando juega el jugador 
 function juegaJugador(mazo, cartasJugador){
     let cant;
     let puntosActual=0;
@@ -95,39 +96,45 @@ function juegaJugador(mazo, cartasJugador){
             cartasJugador[i].preguntarPalo(this);
         }
         for(let i=0; i<2; i++){
+            //elimina del mazo la cartas usadas
             mazo.shift();
         }
         
         console.log("--------------------------");
     }
     else{
-        console.log("ACA");
+        //Partida ya en curso
         cartasJugador = pedirCartas(1, mazo, cartasJugador);
+        //elimina del mazo la cartas usadas
         mazo.shift();
-        
-        for(let i=0; i<cartasJugador.length; i++){
-            cartasJugador[i].preguntarPalo(this);
-        }
-        console.log("--------------------------");
-
+                //Debugging muestra cartas del jugador
+                /*for(let i=0; i<cartasJugador.length; i++){
+                    cartasJugador[i].preguntarPalo(this);
+                }
+                console.log("--------------------------");
+                */
     }
     puntosActual = sumarPuntos(cartasJugador);
     
     puntosActual = sumarPuntos(cartasJugador);
     console.log(puntosActual);
-    console.log("------------------------");
+    //console.log("------------------------");
     return cartasJugador;
 }
-
+//Funcion que controla cuando juega el crupier
 function juegaCrupier(mazo, cartasCrupier, puntosJugador){
     let cant;
     let puntosCrupier=0;
     if(cartasCrupier.length==0){
          // Entrega dos cartas para iniciar a jugar
-         cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
-        console.log("------Carta Crupier-------");
-        cartasCrupier[0].preguntarPalo(this);
-        console.log("------------------------");
+         cartasCrupier = pedirCartas(1, mazo, cartasCrupier);   
+
+             //Debugging muestra cartas del jugador
+            /*console.log("------Carta Crupier-------");
+            cartasCrupier[0].preguntarPalo(this);
+            console.log("------------------------");*/
+
+        //elimina del mazo la cartas usadas    
         mazo.shift();
         return cartasCrupier;
     }
@@ -137,14 +144,18 @@ function juegaCrupier(mazo, cartasCrupier, puntosJugador){
         while(puntosCrupier<17 && puntosCrupier<puntosJugador){
             //console.clear();
             cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
+            //elimina del mazo la cartas usadas
             mazo.shift();
-            console.log("--------------------------");
-            for(let i=0; i<cartasCrupier.length; i++){
-                cartasCrupier[i].preguntarPalo(this);
-            }
+
+                //Debugging muestra cartas del jugador
+                /*
+                console.log("--------------------------");
+                for(let i=0; i<cartasCrupier.length; i++){
+                    cartasCrupier[i].preguntarPalo(this);
+                }*/
         
             puntosCrupier = sumarPuntos(cartasCrupier);  
-            console.log("--------------------------");
+            //console.log("--------------------------");
 
            
             
@@ -153,7 +164,7 @@ function juegaCrupier(mazo, cartasCrupier, puntosJugador){
 
     return cartasCrupier;
 }
-
+//Decide quien gana y muestra en pantalla el cartel del resultado
 function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
     if(puntosCrupier<=21){
         if(puntosCrupier>puntosJugador){
@@ -175,17 +186,43 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
         
     }
 }
-
+// La funcion realiza:
+//     Revisa si hay que crear nuevos espacios para cartas (DIV)
+//     Actualiza las cartas en pantalla
+//     Borra los espacios extras al reiniciar una partida (Borra los DIVS creados)
 function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
     let figuraCrupier =[];
     let figuraJugador =[];
     let j=1;
     figuraCrupier=document.getElementsByClassName("cartaCrup"); 
     figuraJugador=document.getElementsByClassName("cartaJug"); 
-    
+    // Revisa si la cantidad de cartas en la pantalla ("CANTIDAD DE DIVS") es mayor a la cantidad de 
+    // cartas por mazo de jugador y crupier. Si la CANT es menor se crea nuevos divs
+    if(figuraJugador.length < mazoJugador.length || figuraCrupier.length < mazoCrupier.length){
+        if(figuraJugador.length < mazoJugador.length ){
+            const cartaNueva = document.getElementById("divMesaJugador");
+            let modeloCarta = document.createElement("div");
+            modeloCarta.className = "col  m-3 "; 
+            modeloCarta.innerHTML = ` <div class="carta cartaJug" >
+                                      </div>
+                                     `;
+            cartaNueva.appendChild(modeloCarta);
+        }
+        if(figuraCrupier.length < mazoCrupier.length){
+            const cartaNueva = document.getElementsByClassName("mesaCrup"); 
+            let modeloCarta = document.createElement("div");
+            modeloCarta.className = "col  m-3 "; 
+            modeloCarta.innerHTML = ` <div class="carta cartaCrup" >
+                                      </div>
+                                     `;
+        }
+    }
+    // Pregunta si el usuario apreto el boton Reiniciar 
+    // reiniciar = 0 actualiza las cartas en tablero
+    // reiniciar = 1 borra las cartas del tablero y devuelve la cantidad de figuras de cartas a 4 para el jugador y el crupier
     if(reiniciar==0){
-        for(let i=0;i<mazoJugador.length; i++){  
-            figuraJugador[i].className = "carta cartaJug" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo;
+        for(let i=0;i<mazoJugador.length; i++){
+            figuraJugador[i].className = "carta cartaJug" + " "+"cart"+mazoJugador[i].numero+"-"+mazoJugador[i].palo; 
         }
         for(let i=0;i<mazoCrupier.length; i++){  
             figuraCrupier[i].className = "carta cartaCrup" + " "+"cart"+mazoCrupier[i].numero+"-"+mazoCrupier[i].palo;
@@ -196,12 +233,10 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
     }
     else{
         figuraCrupier=document.getElementsByClassName("cartaCrup");
-        console.log(figuraCrupier);
         for(let i=0;i<figuraCrupier.length; i++){  
             figuraCrupier[i].className = "carta cartaCrup" + " "+"blank";
         } 
         figuraJugador=document.getElementsByClassName("cartaJug");
-        console.log(figuraJugador);
         for(let i=0;i<figuraJugador.length; i++){  
             figuraJugador[i].className = "carta cartaJug" + "  "+"blank";
         } 
@@ -265,7 +300,7 @@ window.onload = () => {
             }
         }        
     }
-
+    //boton de reiniciar partida (solo funciona si la partida fue terminada)
     botonReiniciar.onclick = () => {
         if(partidaTerminada==1){
             mazo=[];

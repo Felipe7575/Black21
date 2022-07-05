@@ -11,15 +11,17 @@
     width: 100vw;
     background-color: rgb(240, 234, 234);
     background-image: url("../assets/images/wepik--2022530-10208.png");
+    flex-wrap: nowrap;
 }
 
 .mesaJugador,.mesaCrupier{
     width: 100vh;
-    height: 40wh;
+    height: 350px;
+    flex-wrap: nowrap;
 }
 .Botones{
-    width: 100vh;
-    height: 20wh;
+    width: 100vw;
+    height: auto;
 }
 .carta{
     height: 350px;
