@@ -271,10 +271,56 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
     }
 }
 
+function actualizarMontos(montoApostado,saldoActual){
+    if(document.getElementsByClassName("cartel").length == 0){
+        const cartelSaldo = document.createElement("h3");
+        cartelSaldo.innerHTML = `Saldo actual ${saldoActual}$$`;
+        cartelSaldo.className = "cartel";
+        cartelSaldo.id = "cartelSaldo";
+        const cartelApostando = document.createElement("h3");
+        cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
+        cartelApostando.className = "cartel";
+        cartelApostando.id = "cartelApostando";
+        listaApuestas.append(cartelSaldo,cartelApostando); 
+    }
+    let cartel = document.getElementById("cartelSaldo");
+    cartel.innerHTML = `Saldo actual ${saldoActual}$$`;
+    cartel = document.getElementById("cartelApostando");
+    cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
+}
+
+function saldoLocalStorage(escribe) {
+    if(escribe == -1){
+        saldoActual = localStorage.getItem("saldo");
+        if(saldoActual === null){
+            saldoActual = 0 ;
+            console.log("aca--");
+            localStorage.setItem("saldo",400);
+        }
+        else{
+            saldoActual = parseInt(localStorage.getItem("saldo"));
+        }
+
+        return saldoActual;
+    }
+    else{
+        localStorage.setItem("saldo",escribe);
+    }
+    
+
+}
+
 let mazo=[];
 let mazoCrupier=[];
 let cartasJugador=[];
 let botonPedir, botonPlantarse,cartelGanaPierde,botonReiniciar;
+localStorage.clear();
+let saldoActual = 0;
+
+// Revisa si tiene saldo anterior sino lo pone en 0
+saldoActual = saldoLocalStorage(-1);
+
+
 
 
 
@@ -288,6 +334,28 @@ window.onload = () => {
     let puntosJugador=0;
     let puntosCrupier=0; 
     let partidaTerminada=0;
+
+
+    //Muestra las apuestas y espera la seleccion
+    const apuestas = [5,10,25,50,-5,-10,-25,-50];
+    let montoApostado=0;
+    const listaApuestas = document.getElementById("listaApuestas");
+    apuestas.forEach( (apuesta) => {
+        const botonApuesta = document.createElement("button");
+        botonApuesta.innerHTML = apuesta;
+        botonApuesta.className = "botonApuesta";
+        listaApuestas.appendChild(botonApuesta); 
+        botonApuesta.onclick = () => {
+            if(montoApostado+apuesta>=0 && saldoActual-apuesta>=0) {
+                montoApostado+=apuesta;
+                saldoActual-=apuesta; 
+                actualizarMontos(montoApostado,saldoActual)
+            }
+        }
+    }); 
+    actualizarMontos(montoApostado,saldoActual);
+   
+
 
     generarMazo(mazo, cantidadDeMazos);
     mazoCrupier = juegaCrupier(mazo, mazoCrupier,puntosJugador);
@@ -343,6 +411,7 @@ window.onload = () => {
             partidaTerminada=0;
         }
     }
+
 
 
 

@@ -8,7 +8,7 @@
 
 .MesaDeJuego{
     height: 100vh;
-    width: 100vw;
+    width: auto;
     background-color: rgb(240, 234, 234);
     background-image: url("../assets/images/wepik--2022530-10208.png");
     flex-wrap: nowrap;
@@ -61,3 +61,19 @@
    background-position: center;
 }
 
+.apuestas{
+    position: absolute;
+    top : 80%;
+    display: flex;
+    flex-wrap: nowrap;
+    width:fit-content;
+    .botonApuesta{
+        height: 70px;
+        width: 70px;
+        margin: 0% 1% 0% 1%;
+    }
+
+}
+.displayNone{
+    display: none;
+}
