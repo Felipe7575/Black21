@@ -4,7 +4,9 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed"
+    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
+    "build": "[my-framework] build --output public"
+    
   },
   "repository": {
     "type": "git",
