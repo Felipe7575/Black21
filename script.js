@@ -118,7 +118,7 @@ function juegaJugador(mazo, cartasJugador){
     
     puntosActual = sumarPuntos(cartasJugador);
     console.log(puntosActual);
-    //console.log("------------------------");
+    //console.log("-------------------------");
     return cartasJugador;
 }
 //Funcion que controla cuando juega el crupier
