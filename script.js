@@ -203,7 +203,7 @@ function actualizaCartas(mazoJugador,mazoCrupier,reiniciar){
         figuraJugador=document.getElementsByClassName("cartaJug");
         console.log(figuraJugador);
         for(let i=0;i<figuraJugador.length; i++){  
-            figuraJugador[i].className = "carta cartaJug" + " "+"blank";
+            figuraJugador[i].className = "carta cartaJug" + "  "+"blank";
         } 
     }
 }
