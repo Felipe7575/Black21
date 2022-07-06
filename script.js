@@ -327,6 +327,7 @@ saldoLocalStorage(-1);
 
 window.onload = () => {
     // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
+    //   Es correcto hacer esto o uso un Let y lo voy modificando?? 
     const botonPedir=document.getElementById("pedir");
     const botonPlantarse=document.getElementById("plantarse");
     const botonReiniciar=document.getElementById("reiniciar");
