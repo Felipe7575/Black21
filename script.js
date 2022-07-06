@@ -293,6 +293,8 @@ function actualizaCartas(mazoJugador,cartasCrupier,reiniciar){
 
 function actualizarMontos(montoApostado,saldoActual){
     if(document.getElementsByClassName("cartel").length == 0){
+        const div = document.createElement("div");
+        div.className   = "contenedorSaldos";
         const cartelSaldo = document.createElement("h3");
         cartelSaldo.innerHTML = `Saldo actual ${saldoActual}$$`;
         cartelSaldo.className = "cartel";
@@ -301,7 +303,8 @@ function actualizarMontos(montoApostado,saldoActual){
         cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
         cartelApostando.className = "cartel";
         cartelApostando.id = "cartelApostando";
-        listaApuestas.append(cartelSaldo,cartelApostando); 
+        div.append(cartelSaldo,cartelApostando);
+        listaApuestas.append(div); 
     }
     let cartel = document.getElementById("cartelSaldo");
     cartel.innerHTML = `Saldo actual ${saldoActual}$$`;
@@ -372,6 +375,7 @@ window.onload = () => {
     actualizarMontos(montoApostado,saldoLocalStorage(-1));
     const botonApostar = document.createElement('button');
     botonApostar.innerHTML = 'Apostar';
+    botonApostar.className = "botonApostar";
     listaApuestas.appendChild(botonApostar);
     botonApostar.onclick = () => { 
         menuDeBotones.className = " row Botones position-absolute bottom-0 ";
@@ -398,7 +402,7 @@ window.onload = () => {
     }
     //Boton de plantarse (solo funciona si el jugador a jugado al menos una vez)
     botonPlantarse.onclick = () => {
-        if(cartasJugador.length>0 && ganador===0){
+        if(cartasJugador.length>0 ){
             if(puntosJugador<=21){
                 puntosJugador=sumarPuntos(cartasJugador);
                 cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);

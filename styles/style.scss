@@ -8,7 +8,7 @@
 
 .MesaDeJuego{
     height: 100vh;
-    width: auto;
+   
     background-color: rgb(240, 234, 234);
     background-image: url("../assets/images/wepik--2022530-10208.png");
     flex-wrap: nowrap;
@@ -23,8 +23,16 @@
     margin-bottom: 1%;
 }
 .Botones{
-    width: 100vw;
+    position:absolute;
+    top: 90%;
+    width: 100%;
     height: auto;
+    .col{
+        display: flex;
+        justify-content: center;
+        height: fit-content;
+    }
+    
 }
 .carta{
     height: 350px;
@@ -63,15 +71,32 @@
 
 .apuestas{
     position: absolute;
-    top : 80%;
+    bottom: 10%;
     display: flex;
-    flex-wrap: nowrap;
-    width:fit-content;
+    flex-wrap:wrap;
+    
+    justify-content:space-around;
+    align-items: center;
+    width:95%;   
     .botonApuesta{
         height: 80px;
-        width: 100px;
+        width: 80px;
         margin: 0% 1% 0% 1%;
     }
+    .botonApostar{
+        width: 100px;
+        height: 100px;
+        font-size: 25px;
+    }
+    .contenedorSaldos{
+
+        .cartel{
+            width: auto;
+            font-size: 40px;
+        }
+    }
+    
+    
 
 }
 .displayNone{
@@ -89,5 +114,5 @@
     
 }
 .botonApuesta:hover{
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.529);
+    box-shadow: 10px 10px 10px 0px rgba(206, 181, 16, 0.431);
 }
