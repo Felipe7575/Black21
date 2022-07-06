@@ -14,9 +14,9 @@ const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
 let barajaOriginal=[];
 
 class cartas{
-    constructor(numero, palo){
-        this.numero = numero;
-        this.palo = palo;
+	constructor(numero, palo){
+		this.numero = numero;
+		this.palo = palo;
     }
     preguntarPalo(){
         console.log(this.numero + palos[this.palo]);
