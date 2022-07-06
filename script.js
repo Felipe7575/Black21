@@ -1,9 +1,11 @@
 /* La idea del programa es generar un simulador de BlackJack 
 Hasta el momento el codigo permite :
     -Permite que el usuario pida cartas 
-    -Reparte un total de hasta 4 cartas (Tengo que ver como solucionar esto)
     - Suma los puntos de las cartas entregadas
     - Cartel de quien gana el juego 
+    - Permite realizar apuestas
+    - Guarda los saldos en LocalStorage
+    - Suma o resta al saldo dependiendo del resultado de la partida
 */
 
 
@@ -317,27 +319,28 @@ function saldoLocalStorage(escribe) {
 let mazo=[];
 let cartasCrupier=[];
 let cartasJugador=[];
-let saldoActual = 0;
+
 
 //localStorage.setItem("saldo",100);
 // Revisa si tiene saldo anterior sino lo pone en 0
-saldoActual = saldoLocalStorage(-1);
+saldoLocalStorage(-1);
 
 window.onload = () => {
-    
+    // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
     const botonPedir=document.getElementById("pedir");
     const botonPlantarse=document.getElementById("plantarse");
     const botonReiniciar=document.getElementById("reiniciar");
     const cartelGanaPierde=document.getElementById("GanaPierde");
     const menuDeApuestas = document.getElementById("listaApuestas");
     const menuDeBotones = document.getElementById("listaDeBotones");
-
+    // ------------------INICIALIZA VARIABLES----------------------------------------------
     const cantidadDeMazos = 1;
     let puntosJugador=0;
     let puntosCrupier=0; 
     let partidaTerminada=0;
     let ganador;
 
+    // ------------------Crea la lista botones de apuestas (MONEDAS)----------------------------------------------
     //Muestra las apuestas y espera la seleccion
     const apuestas = [5,10,25,50,-5,-10,-25,-50];
     let montoApostado=0;
@@ -348,14 +351,14 @@ window.onload = () => {
         botonApuesta.className = "botonApuesta";
         listaApuestas.appendChild(botonApuesta); 
         botonApuesta.onclick = () => {
-            if(montoApostado+apuesta>=0 && saldoActual-apuesta>=0) {
+            if(montoApostado+apuesta>=0 && saldoLocalStorage(-1)-apuesta>=0) {
                 montoApostado+=apuesta;
-                saldoActual-=apuesta; 
-                actualizarMontos(montoApostado,saldoActual)
+                saldoLocalStorage(saldoLocalStorage(-1)-apuesta); 
+                actualizarMontos(montoApostado,saldoLocalStorage(-1))
             }
         }
     }); 
-    actualizarMontos(montoApostado,saldoActual);
+    actualizarMontos(montoApostado,saldoLocalStorage(-1));
     const botonApostar = document.createElement('button');
     botonApostar.innerHTML = 'Apostar';
     listaApuestas.appendChild(botonApostar);
@@ -364,7 +367,7 @@ window.onload = () => {
         menuDeApuestas. className = " apuestas d-none";
     }
 
-
+    //-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
     generarMazo(mazo, cantidadDeMazos);
     cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
 
@@ -415,15 +418,15 @@ window.onload = () => {
                 case 1:
                     break;
                 case 2:
-                    saldoActual += 2*montoApostado;
+                    saldoLocalStorage(saldoLocalStorage(-1)+ 2*montoApostado);
                     break;
                 case 3:
-                    saldoActual += montoApostado;
+                    saldoLocalStorage(saldoLocalStorage(-1)+ montoApostado);
                     break;
             }
-            saldoLocalStorage(saldoActual);
+            
             montoApostado=0;
-            actualizarMontos(montoApostado,saldoActual)
+            actualizarMontos(montoApostado,saldoLocalStorage(-1));
             mazo=[];
             cartasCrupier=[];
             cartasJugador=[];

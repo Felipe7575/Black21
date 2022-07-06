@@ -68,12 +68,26 @@
     flex-wrap: nowrap;
     width:fit-content;
     .botonApuesta{
-        height: 70px;
-        width: 70px;
+        height: 80px;
+        width: 100px;
         margin: 0% 1% 0% 1%;
     }
 
 }
 .displayNone{
     display: none;
+}
+
+.botonApuesta{
+    background-image: url(../assets/images/moneda.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    border-radius: 100px;
+    font-size: 30px;
+    
+}
+.botonApuesta:hover{
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.529);
 }
