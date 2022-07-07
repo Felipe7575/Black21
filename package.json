@@ -5,8 +5,7 @@
   "main": "script.js",
   "scripts": {
     "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
-    "build": "webpack --config webpack.config.js",
-    "test": "jest"
+    
   },
   "repository": {
     "type": "git",
@@ -17,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/Felipe7575/Black21/issues"
   },
-  "homepage": "https://github.com/Felipe7575/Black21#readme",
-  "devDependencies": {
-    "eslint": "^8.19.0"
-  }
+  "homepage": "https://github.com/Felipe7575/Black21#readme"
 }
