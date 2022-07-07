@@ -1,16 +1,17 @@
 @import './backCartas.scss';
+@import './tarjetaCredito.scss';
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-  
+    
 }
-
-.MesaDeJuego{
-    height: 100vh;
-   
+body{
     background-color: rgb(240, 234, 234);
     background-image: url("../assets/images/wepik--2022530-10208.png");
+}
+.MesaDeJuego{
+    height: 100vh;
     flex-wrap: nowrap;
 }
 
@@ -42,31 +43,31 @@
     display: none;
 }
 .CartelGanaPierdeNoHide{
-    display:block;
+    display:inline-block;
     position: absolute;
     width: 500px;
     height: 500px;
-    top: 20%;
-    right: 30%;  
+    top: 34%;
+    left: 30%;
 }
 .CartelGana{
    background-image: url("../assets/images/Gana.png");
    background-size: contain;
    background-repeat: no-repeat;
-   background-position: center;
+   
    
 }
 .CartelPierde{
    background-image: url("../assets/images/Pierde.png");
    background-size: contain;
    background-repeat: no-repeat;
-   background-position: center;
+   
 }
 .CartelEmpate{
    background-image: url("../assets/images/Empate-01.png");
    background-size: contain;
    background-repeat: no-repeat;
-   background-position: center;
+   
 }
 
 .apuestas{
@@ -74,7 +75,6 @@
     bottom: 10%;
     display: flex;
     flex-wrap:wrap;
-    
     justify-content:space-around;
     align-items: center;
     width:95%;   
@@ -89,7 +89,10 @@
         font-size: 25px;
     }
     .contenedorSaldos{
-
+        background-color: rgba(240, 248, 255, 0.534);
+        padding: 1.3%;
+        margin: 1%;
+        border: 2px inset  rgba(156, 132, 132, 0.254);
         .cartel{
             width: auto;
             font-size: 40px;

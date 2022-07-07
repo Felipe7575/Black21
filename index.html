@@ -56,16 +56,79 @@
 
             <div class="col">
                 <button  class="btn btn-primary btn-lg" id="reiniciar">Jugar de nuevo</button>
-            </div>      
+            </div> 
         </div>
-        <div class="apuestas " id="listaApuestas">
-            
-        </div>
+        <div class="CartelGanaPierdeHide" id="GanaPierde">
+        
+        </div>    
 
     </div>
-    <div class="CartelGanaPierdeHide" id="GanaPierde">
-        
+    <div class="MesaDeApuestas">
+        <!--  PLANTILLA DE PAGO CON TARJETA -->
+        <form action="#" class="credit-card-div" id="credit-card-div">
+            <div class="panel panel-default" >
+             <div class="panel-heading">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <input type="number" class="form-control" placeholder="Ingrese el monto a cargar" id="montoDepositar"/>
+                        </div>
+                    </div>
+                  <div class="row ">
+                          <div class="col-md-12">
+                              <input type="text" class="form-control" placeholder="Ingrese el numero de la tarjeta" id="numeroTarjeta" />
+                          </div>
+                  </div>
+                 <div class="row ">
+                          <div class="col-md-3 col-sm-3 col-xs-3">
+                              <span class="help-block text-muted small-font" > Mes</span>
+                              <input type="text" class="form-control" placeholder="MM" id="MM" />
+                          </div>
+                     <div class="col-md-3 col-sm-3 col-xs-3">
+                              <span class="help-block text-muted small-font" >  Año</span>
+                              <input type="text" class="form-control" placeholder="YY" id="YY" />
+                          </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                              <span class="help-block text-muted small-font" >  CCV</span>
+                              <input type="text" class="form-control" placeholder="CCV" id="CCV" />
+                          </div>
+                     <div class="col-md-3 col-sm-3 col-xs-3">
+                        <img src="./assets/images/tarjetaCredito.png" class="img-rounded" />
+                     </div>
+                      </div>
+                 <div class="row ">
+                          <div class="col-md-12 pad-adjust">           
+                              <input type="text" class="form-control" placeholder="Nombre de la tarjeta" id="nombreTarjeta"/>
+                          </div>
+                      </div>
+                 <div class="row">
+            <div class="col-md-12 pad-adjust">
+                <div class="checkbox">
+                <label>
+                  <input type="checkbox" checked class="text-muted" id="guardarTarjeta" >Guardar datos de la tarjeta 
+                </label>
+              </div>
+            </div>
+                 </div>
+                   <div class="row ">
+                        <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                             <button class="btn btn-danger" id="botonCancelar">CANCELAR</button>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                              <button class="btn btn-warning btn-block" id="botonPagar">PAGAR</button>
+                          </div>
+                      </div>
+                 
+             </div>
+            </div>
+        </form>
+        <!--  TERMINA DE PAGO CON TARJETA -->
+
+        <div class="apuestas " id="listaApuestas">
+                
+        </div>
     </div>
+        
+    
     
     
 
