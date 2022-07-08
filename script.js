@@ -16,7 +16,7 @@ let barajaOriginal=[];
 class cartas{
 	constructor(numero, palo){
 		this.numero = numero;
-		this.palo = palo;
+        this.palo = palo;
     }
     preguntarPalo(){
         console.log(this.numero + palos[this.palo]);
@@ -330,16 +330,50 @@ function saldoLocalStorage(escribe) {
     }  
 }
 
+function administrPago(){
+    const montoINPUT = document.getElementById("montoDepositar");
+    const numeroTarjetaINPUT = document.getElementById("numeroTarjeta");
+    const mesINPUT = document.getElementById("MM");
+    const añoINUPUT = document.getElementById("YY");
+    const ccvINPUT = document.getElementById("CCV");
+    const nombreINPUT = document.getElementById("nombreTarjeta");
+    const guardarINPUT = document.getElementById("guardarTarjeta");
+    const CANCELAR = document.getElementById("botonCancelar");
+    const PAGAR = document.getElementById("botonPagar");
+    const saldoLABEL = document.getElementById("cartelSaldo");
+
+    PAGAR.onclick = () => {
+        if(parseInt(montoINPUT.value)>0){
+            const saldoNuevo = saldoLocalStorage(-1) + parseInt(montoINPUT.value);
+            saldoLocalStorage(saldoNuevo);
+            saldoLABEL.innerHTML = `Saldo actual ${saldoNuevo}$$`;
+            montoINPUT.value = "";
+        }
+        else{
+            montoINPUT.value = "";  
+        }    
+    }
+    CANCELAR.onclick = () => {
+        montoINPUT.value = "";
+        numeroTarjetaINPUT.value = "";
+        añoINUPUT.value = "";
+        mesINPUT.value = "";
+        ccvINPUT.value = "";
+        nombreINPUT.value = "";
+    }
+}
+
 let mazo=[];
 let cartasCrupier=[];
 let cartasJugador=[];
-
 
 //localStorage.setItem("saldo",100);
 // Revisa si tiene saldo anterior, sino lo pone en 0
 saldoLocalStorage(-1);
 
+
 window.onload = () => {
+    
     // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
     //   Es correcto hacer esto o uso un Let y lo voy modificando?? 
     const botonPedir=document.getElementById("pedir");
@@ -348,6 +382,7 @@ window.onload = () => {
     const cartelGanaPierde=document.getElementById("GanaPierde");
     const menuDeApuestas = document.getElementById("listaApuestas");
     const menuDeBotones = document.getElementById("listaDeBotones");
+    const cartelCargarDinero = document.getElementById("credit-card-div");
     // ------------------INICIALIZA VARIABLES----------------------------------------------
     const cantidadDeMazos = 1;
     let puntosJugador=0;
@@ -380,7 +415,10 @@ window.onload = () => {
     botonApostar.onclick = () => { 
         menuDeBotones.className = " row Botones position-absolute bottom-0 ";
         menuDeApuestas. className = " apuestas d-none";
+        cartelCargarDinero.className = "credit-card-div d-none";
     }
+    // GENERNERA LOS EVENT LISTENER DE LOS PAGOS
+    administrPago();
 
     //-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
     generarMazo(mazo, cantidadDeMazos);
@@ -449,6 +487,8 @@ window.onload = () => {
             //Borra las cartas de las partidas anteriores
             actualizaCartas(cartasJugador,cartasCrupier,1);
             cartelGanaPierde.className="CartelGanaPierdeHide ";
+
+            cartelCargarDinero.className = "credit-card-div";
             
         }
     }
