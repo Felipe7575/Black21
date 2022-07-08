@@ -290,7 +290,7 @@ function actualizaCartas(mazoJugador,cartasCrupier,reiniciar){
                                 </div>`; 
     }
 }
-
+// La funcion actualiza los carteles de Saldo y Monto apostado
 function actualizarMontos(montoApostado,saldoActual){
     if(document.getElementsByClassName("cartel").length == 0){
         const div = document.createElement("div");
@@ -311,7 +311,9 @@ function actualizarMontos(montoApostado,saldoActual){
     cartel = document.getElementById("cartelApostando");
     cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
 }
-
+//Funcion que maneja el localStorage item Saldo
+//Si se envida un valor numerico mayor a cero se lo guarda
+//si se envia -1 retorna el saldo actual
 function saldoLocalStorage(escribe) {
     if(escribe == -1){
         saldoActual = localStorage.getItem("saldo");
@@ -329,7 +331,7 @@ function saldoLocalStorage(escribe) {
         localStorage.setItem("saldo",escribe);
     }  
 }
-
+//Funcion que administra los ingresos de saldo 
 function administrPago(){
     const montoINPUT = document.getElementById("montoDepositar");
     const numeroTarjetaINPUT = document.getElementById("numeroTarjeta");
@@ -367,137 +369,156 @@ let mazo=[];
 let cartasCrupier=[];
 let cartasJugador=[];
 
+
 //localStorage.setItem("saldo",100);
 // Revisa si tiene saldo anterior, sino lo pone en 0
 saldoLocalStorage(-1);
+// -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
+//   Es correcto hacer esto o uso un Let y lo voy modificando?? 
+const botonPedir=document.getElementById("pedir");
+const botonDoblar=document.getElementById("doblar");
+const botonPlantarse=document.getElementById("plantarse");
+const botonReiniciar=document.getElementById("reiniciar");
+const cartelGanaPierde=document.getElementById("GanaPierde");
+const menuDeApuestas = document.getElementById("listaApuestas");
+const menuDeBotones = document.getElementById("listaDeBotones");
+const cartelCargarDinero = document.getElementById("credit-card-div");
+const mesaDeApuestas = document.getElementById("mesaDeApuestas");
+const mesaDeJuego = document.getElementById("mesaDeJuego");
+// ------------------INICIALIZA VARIABLES----------------------------------------------
+const cantidadDeMazos = 1;
+let puntosJugador=0;
+let puntosCrupier=0; 
+let ganador;
+let montoApostado=0;
+let cantidadDeSaldosPagar=2;
 
-
-window.onload = () => {
-    
-    // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
-    //   Es correcto hacer esto o uso un Let y lo voy modificando?? 
-    const botonPedir=document.getElementById("pedir");
-    const botonPlantarse=document.getElementById("plantarse");
-    const botonReiniciar=document.getElementById("reiniciar");
-    const cartelGanaPierde=document.getElementById("GanaPierde");
-    const menuDeApuestas = document.getElementById("listaApuestas");
-    const menuDeBotones = document.getElementById("listaDeBotones");
-    const cartelCargarDinero = document.getElementById("credit-card-div");
-    const mesaDeJuego = document.getElementById("mesaDeJuego");
-    const mesaDeApuestas = document.getElementById("mesaDeApuestas");
-    // ------------------INICIALIZA VARIABLES----------------------------------------------
-    const cantidadDeMazos = 1;
-    let puntosJugador=0;
-    let puntosCrupier=0; 
-    let ganador;
-    let montoApostado=0;
-
-    // ------------------Crea la lista botones de apuestas (MONEDAS)----------------------------------------------
-    //Muestra las apuestas y espera la seleccion
-    const apuestas = [5,10,25,50,-5,-10,-25,-50];
-    const listaApuestas = document.getElementById("listaApuestas");
-    apuestas.forEach( (apuesta) => {
-        const botonApuesta = document.createElement("button");
-        botonApuesta.innerHTML = apuesta;
-        botonApuesta.className = "botonApuesta";
-        listaApuestas.appendChild(botonApuesta); 
-        botonApuesta.onclick = () => {
-            if(montoApostado+apuesta>=0 && saldoLocalStorage(-1)-apuesta>=0) {
-                montoApostado+=apuesta;
-                saldoLocalStorage(saldoLocalStorage(-1)-apuesta); 
-                actualizarMontos(montoApostado,saldoLocalStorage(-1))
-            }
+// ------------------Crea la lista botones de apuestas (MONEDAS)----------------------------------------------
+//Muestra las apuestas y espera la seleccion
+const apuestas = [5,10,25,50,-5,-10,-25,-50];
+const listaApuestas = document.getElementById("listaApuestas");
+apuestas.forEach( (apuesta) => {
+    const botonApuesta = document.createElement("button");
+    botonApuesta.innerHTML = apuesta;
+    botonApuesta.className = "botonApuesta";
+    listaApuestas.appendChild(botonApuesta); 
+    botonApuesta.onclick = () => {
+        if(montoApostado+apuesta>=0 && saldoLocalStorage(-1)-apuesta>=0) {
+            montoApostado+=apuesta;
+            saldoLocalStorage(saldoLocalStorage(-1)-apuesta); 
+            actualizarMontos(montoApostado,saldoLocalStorage(-1))
         }
-    }); 
-    actualizarMontos(montoApostado,saldoLocalStorage(-1));
-    const botonApostar = document.createElement('button');
-    botonApostar.innerHTML = 'Apostar';
-    botonApostar.className = "botonApostar";
-    listaApuestas.appendChild(botonApostar);
-    botonApostar.onclick = () => { 
-        menuDeBotones.className = " row Botones position-absolute bottom-0 ";
-        mesaDeApuestas.className = "MesaDeApuestas d-none";
-        mesaDeJuego.className = "container-fluid MesaDeJuego";
-        
     }
-    // GENERNERA LOS EVENT LISTENER DE LOS PAGOS
-    administrPago();
+}); 
+actualizarMontos(montoApostado,saldoLocalStorage(-1));
+const botonApostar = document.createElement('button');
+botonApostar.innerHTML = 'Apostar';
+botonApostar.className = "botonApostar";
+listaApuestas.appendChild(botonApostar);
+botonApostar.onclick = () => { 
+    console.log("onApostar click");
+    mesaDeApuestas.className = " MesaDeApuestas container d-none ";
+    mesaDeJuego.className = " container-fluid MesaDeJuego";
+}
+// GENERNERA LOS EVENT LISTENER DE LOS PAGOS
+administrPago();
 
-    //-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
-    generarMazo(mazo, cantidadDeMazos);
-    cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
+//-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
+generarMazo(mazo, cantidadDeMazos);
+cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
 
-    //Boton de pedir (solo funciona si el jugador no a tocado el boton de plantarse)
-    botonPedir.onclick = () => {
-        if(cartasCrupier.length==1){
+//Boton de pedir (solo funciona si el jugador no a tocado el boton de plantarse)
+botonPedir.onclick = () => {
+    if(cartasCrupier.length==1){
+        puntosJugador=sumarPuntos(cartasJugador);
+        if(puntosJugador<21){
+            cartasJugador = juegaJugador(mazo, cartasJugador);
+            actualizaCartas(cartasJugador,cartasCrupier,0);
             puntosJugador=sumarPuntos(cartasJugador);
-            if(puntosJugador<21){
-                cartasJugador = juegaJugador(mazo, cartasJugador);
-                actualizaCartas(cartasJugador,cartasCrupier,0);
-                puntosJugador=sumarPuntos(cartasJugador);
-                if(puntosJugador>21){
-                    ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
-                }
-            }      
-        }
-    }
-    //Boton de plantarse (solo funciona si el jugador a jugado al menos una vez)
-    botonPlantarse.onclick = () => {
-        if(cartasJugador.length>0 ){
-            if(puntosJugador<=21){
-                puntosJugador=sumarPuntos(cartasJugador);
-                cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
-                puntosCrupier = sumarPuntos(cartasCrupier);
-                actualizaCartas(cartasJugador,cartasCrupier,0);
-                ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);      
-            }
-            else{
+            if(puntosJugador>21){
                 ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
             }
-        }        
-    }
-    //boton de reiniciar partida (solo funciona si la partida fue terminada)
-    botonReiniciar.onclick = () => {
-        if(ganador===1||ganador===2||ganador===3){
-            menuDeBotones.className = " row Botones position-absolute bottom-0 d-none";
-            menuDeApuestas. className = " apuestas ";
-            switch(ganador){
-                //GANA LA CASA
-                case 1:
-                    break;
-                //PIERDE LA CASA
-                case 2:
-                    saldoLocalStorage(saldoLocalStorage(-1)+ 2*montoApostado);
-                    break;
-                //EMPATE
-                case 3:
-                    saldoLocalStorage(saldoLocalStorage(-1)+ montoApostado);
-                    break;
-            }
-            
-            
-            //Actualiza el cartel de saldo actual y apostado, sumandole o restandole la apuesta dependiendo del resultado
-            montoApostado=0;
-            actualizarMontos(montoApostado,saldoLocalStorage(-1));
-
-            //Reinica las variables para iniciar otra partida
-            mazo=[]; cartasCrupier=[]; cartasJugador=[]; 
-            puntosJugador=0; puntosCrupier=0; ganador = 0;
-
-            generarMazo(mazo, cantidadDeMazos);
-            cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
-
-            //Borra las cartas de las partidas anteriores
-            actualizaCartas(cartasJugador,cartasCrupier,1);
-            cartelGanaPierde.className="CartelGanaPierde d-none ";
-
-            cartelCargarDinero.className = "credit-card-div";
-            mesaDeJuego.className = "container-fluid MesaDeJuego d-none";
-            mesaDeApuestas.className = "MesaDeApuestas ";
-            
-        }
+        }      
     }
 }
+//Boton de doblar (solo funciona si el jugador no a tocado el boton de plantarse)
+botonDoblar.onclick = () => {
+    if(cartasJugador.length>0 && cartasCrupier.length==1){
+        if(puntosJugador<21 && saldoLocalStorage(-1)>=montoApostado){
+            cantidadDeSaldosPagar+=2;
+            saldoLocalStorage(saldoLocalStorage(-1)-montoApostado);
+            actualizarMontos(montoApostado,saldoLocalStorage(-1));
+            juegaJugador(mazo, cartasJugador);
+            actualizaCartas(cartasJugador,cartasCrupier,0);
+            puntosJugador=sumarPuntos(cartasJugador);
+            if(puntosJugador>21){
+                ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
+            }
+        }
+    }
+
+}
+    
+//Boton de plantarse (solo funciona si el jugador a jugado al menos una vez)
+botonPlantarse.onclick = () => {
+    if(cartasJugador.length>0 && cartasCrupier.length==1){
+        if(puntosJugador<=21 ){
+            puntosJugador=sumarPuntos(cartasJugador);
+            cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
+            puntosCrupier = sumarPuntos(cartasCrupier);
+            actualizaCartas(cartasJugador,cartasCrupier,0);
+            ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);      
+        }
+        else{
+            ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
+        }
+    }        
+}
+//boton de reiniciar partida (solo funciona si la partida fue terminada)
+botonReiniciar.onclick = () => {
+    if(ganador===1||ganador===2||ganador===3){
+        menuDeBotones.className = " row Botones position-absolute bottom-0";
+        menuDeApuestas. className = " apuestas ";
+        switch(ganador){
+            //GANA LA CASA
+            case 1:
+                break;
+            //PIERDE LA CASA
+            case 2:
+                saldoLocalStorage(saldoLocalStorage(-1)+ cantidadDeSaldosPagar * montoApostado);
+                console.log(cantidadDeSaldosPagar + " + " + montoApostado); 
+                break;
+            //EMPATE
+            case 3:
+                saldoLocalStorage(saldoLocalStorage(-1)+ (cantidadDeSaldosPagar-2) * montoApostado);
+                break;
+        }    
+        //Actualiza el cartel de saldo actual y apostado, sumandole o restandole la apuesta dependiendo del resultado
+        montoApostado=0;
+        actualizarMontos(montoApostado,saldoLocalStorage(-1));
+
+        //Reinica las variables para iniciar otra partida
+        mazo=[]; cartasCrupier=[]; cartasJugador=[]; 
+        puntosJugador=0; puntosCrupier=0; ganador = 0;
+        cantidadDeSaldosPagar=2; 
+
+        generarMazo(mazo, cantidadDeMazos);
+        cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
+
+        //Borra las cartas de las partidas anteriores
+        actualizaCartas(cartasJugador,cartasCrupier,1);
+        cartelGanaPierde.className="CartelGanaPierdeHide ";
+
+        cartelCargarDinero.className = "credit-card-div";
+        mesaDeApuestas.className = " MesaDeApuestas container  ";
+        mesaDeJuego.className = " container-fluid MesaDeJuego d-none";
+       
+    }
+}
+
+
+
+
 
 
 
