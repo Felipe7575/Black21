@@ -460,7 +460,7 @@ botonDoblar.onclick = () => {
 //Boton de plantarse (solo funciona si el jugador a jugado al menos una vez)
 botonPlantarse.onclick = () => {
     if(cartasJugador.length>0 && cartasCrupier.length==1){
-        if(puntosJugador<=21){
+        if(puntosJugador<=21 ){
             puntosJugador=sumarPuntos(cartasJugador);
             cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
             puntosCrupier = sumarPuntos(cartasCrupier);
