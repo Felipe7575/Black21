@@ -454,6 +454,10 @@ botonDoblar.onclick = () => {
             if(puntosJugador>21){
                 ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
             }
+            else{
+                //Se planta el jugador
+                botonPlantarse.onclick();
+            }
         }
     }
 
