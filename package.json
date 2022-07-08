@@ -1,20 +1,12 @@
 {
-  "name": "black21",
+  "name": "bl21",
   "version": "1.0.0",
-  "description": "",
   "main": "script.js",
   "scripts": {
     "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
-    
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Felipe7575/Black21.git"
+
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Felipe7575/Black21/issues"
-  },
-  "homepage": "https://github.com/Felipe7575/Black21#readme"
+  "description": ""
 }
