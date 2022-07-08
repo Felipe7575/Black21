@@ -190,7 +190,7 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
             }
             if(puntosCrupier===puntosJugador){
                 cartelGanaPierde.className="CartelGanaPierde CartelEmpate";
-                console.log("EMPATE");
+                console.log("EMPATE ");
                 return 3;
             }
         }
