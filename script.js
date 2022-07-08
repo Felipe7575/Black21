@@ -179,29 +179,29 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
     if(puntosJugador<=21){
         if(puntosCrupier<=21){
             if(puntosCrupier>puntosJugador){
-                cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
+                cartelGanaPierde.className="CartelGanaPierde CartelGana";
                 console.log("Gana la casa");
                 return 1;
             }
             if(puntosCrupier<puntosJugador){
-                cartelGanaPierde.className="CartelGanaPierdeNoHide CartelPierde";
+                cartelGanaPierde.className="CartelGanaPierde CartelPierde";
                 console.log("Pierde la casa");
                 return 2;
             }
             if(puntosCrupier===puntosJugador){
-                cartelGanaPierde.className="CartelGanaPierdeNoHide CartelEmpate";
+                cartelGanaPierde.className="CartelGanaPierde CartelEmpate";
                 console.log("EMPATE");
                 return 3;
             }
         }
         else{
             console.log("Pierde la casa"); 
-            cartelGanaPierde.className="CartelGanaPierdeNoHide CartelPierde";
+            cartelGanaPierde.className="CartelGanaPierde CartelPierde";
             return 2;
         }
     }
     else{
-        cartelGanaPierde.className="CartelGanaPierdeNoHide CartelGana";
+        cartelGanaPierde.className="CartelGanaPierde CartelGana";
         console.log("Gana la casa");
         return 1;
     }
@@ -383,6 +383,8 @@ window.onload = () => {
     const menuDeApuestas = document.getElementById("listaApuestas");
     const menuDeBotones = document.getElementById("listaDeBotones");
     const cartelCargarDinero = document.getElementById("credit-card-div");
+    const mesaDeJuego = document.getElementById("mesaDeJuego");
+    const mesaDeApuestas = document.getElementById("mesaDeApuestas");
     // ------------------INICIALIZA VARIABLES----------------------------------------------
     const cantidadDeMazos = 1;
     let puntosJugador=0;
@@ -414,8 +416,9 @@ window.onload = () => {
     listaApuestas.appendChild(botonApostar);
     botonApostar.onclick = () => { 
         menuDeBotones.className = " row Botones position-absolute bottom-0 ";
-        menuDeApuestas. className = " apuestas d-none";
-        cartelCargarDinero.className = "credit-card-div d-none";
+        mesaDeApuestas.className = "MesaDeApuestas d-none";
+        mesaDeJuego.className = "container-fluid MesaDeJuego";
+        
     }
     // GENERNERA LOS EVENT LISTENER DE LOS PAGOS
     administrPago();
@@ -486,9 +489,11 @@ window.onload = () => {
 
             //Borra las cartas de las partidas anteriores
             actualizaCartas(cartasJugador,cartasCrupier,1);
-            cartelGanaPierde.className="CartelGanaPierdeHide ";
+            cartelGanaPierde.className="CartelGanaPierde d-none ";
 
             cartelCargarDinero.className = "credit-card-div";
+            mesaDeJuego.className = "container-fluid MesaDeJuego d-none";
+            mesaDeApuestas.className = "MesaDeApuestas ";
             
         }
     }

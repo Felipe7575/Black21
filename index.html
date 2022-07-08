@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <div class="container-fluid MesaDeJuego">
+    <div class="container-fluid MesaDeJuego d-none" id="mesaDeJuego">
         <div id="contenedorDeCartas">
             <div class="row mesa mesaCrup  " id="divMesaCrup">
                 <div class="col m-3  ">
@@ -58,14 +58,14 @@
                 <button  class="btn btn-primary btn-lg" id="reiniciar">Jugar de nuevo</button>
             </div> 
         </div>
-        <div class="CartelGanaPierdeHide" id="GanaPierde">
+        <div class="CartelGanaPierde d-none" id="GanaPierde">
         
         </div>    
 
     </div>
-    <div class="MesaDeApuestas">
+    <div class="MesaDeApuestas container " id="mesaDeApuestas">
         <!--  PLANTILLA DE PAGO CON TARJETA -->
-        <form action="#" class="credit-card-div" id="credit-card-div">
+        <form action="#" class="credit-card-div row" id="credit-card-div">
             <div class="panel panel-default" >
              <div class="panel-heading">
                     <div class="row mb-3">
@@ -123,7 +123,7 @@
         </form>
         <!--  TERMINA DE PAGO CON TARJETA -->
 
-        <div class="apuestas " id="listaApuestas">
+        <div class="apuestas row " id="listaApuestas">
                 
         </div>
     </div>
