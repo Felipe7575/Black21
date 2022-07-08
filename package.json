@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
+    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed"
 
   },
   "author": "",
