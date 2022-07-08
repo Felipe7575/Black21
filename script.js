@@ -477,8 +477,7 @@ botonPlantarse.onclick = () => {
 //boton de reiniciar partida (solo funciona si la partida fue terminada)
 botonReiniciar.onclick = () => {
     if(ganador===1||ganador===2||ganador===3){
-        menuDeBotones.className = " row Botones position-absolute bottom-0";
-        menuDeApuestas. className = " apuestas ";
+
         switch(ganador){
             //GANA LA CASA
             case 1:
