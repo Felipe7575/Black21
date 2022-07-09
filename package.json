@@ -1,24 +1,11 @@
 {
-  "name": "black21",
+  "name": "bl21",
   "version": "1.0.0",
-  "description": "",
   "main": "script.js",
   "scripts": {
-    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed",
-    "build": "webpack --config webpack.config.js",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Felipe7575/Black21.git"
+    "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Felipe7575/Black21/issues"
-  },
-  "homepage": "https://github.com/Felipe7575/Black21#readme",
-  "devDependencies": {
-    "eslint": "^8.19.0"
-  }
+  "description": ""
 }
