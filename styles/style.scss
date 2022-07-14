@@ -43,9 +43,10 @@ body{
 .carta{
     height: 35vh;
     aspect-ratio: 251/351;
-    background-size: contain;
-
-
+    background-size:cover;
+}
+.carta:hover{
+    transform: scale(1.01);
 }
 
 .CartelGanaPierde{
