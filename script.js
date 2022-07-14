@@ -1,11 +1,15 @@
-/* La idea del programa es generar un simulador de BlackJack 
-Hasta el momento el codigo permite :
-    -Permite que el usuario pida cartas 
-    - Suma los puntos de las cartas entregadas
-    - Cartel de quien gana el juego 
-    - Permite realizar apuestas
-    - Guarda los saldos en LocalStorage
-    - Suma o resta al saldo dependiendo del resultado de la partida
+/* 
+El proyecto pretende hacer un simulador de Black Jack, mediante el uso de JavaScript, HTML y Sass. 
+Hasta el momento el simulador permite:
+
+    -  Permite que el usuario ingrese un monto de dinero, mediante un simulador de tarjeta de crédito, si no lo desea puede jugar gratis
+    -  Realice una apuesta de 5, 10, 25 o 50
+    -  Entrega cartas al jugador y al crupier
+    -  Permite que el usuario pida cartas
+    -  Permite que el usuario Doble la apuesta
+    -  Permite plantarse, y si el puntaje es menor a 21 jugara el crupier
+    -  Se decide si gana o pierde la casa , y por lo tanto sube el saldo del jugador o es restado.
+    -  Permite que el jugador vuelva a apostar
 */
 
 
@@ -60,8 +64,6 @@ function pedirCartas(cantidad, baraja,cartasJugador){
 // Suma los puntos de las cartas que se le paso como parametro, devulve el puntaje entero
 function sumarPuntos(cartasJugador){
     let puntos=0;
-    
-    
     // Busca las cartas que no son ASES y suma el valor de la carta al puntaje
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero>=2){
@@ -85,36 +87,18 @@ function juegaJugador(mazo, cartasJugador){
     if(cartasJugador.length==0){
         // Entrega dos cartas para iniciar a jugar
         cartasJugador = pedirCartas(2, mazo, cartasJugador);
-        
-            //Debugging muestra cartas del jugador
-            /*for(let i=0; i<cartasJugador.length; i++){
-                cartasJugador[i].preguntarPalo(this);
-            }*/
-
+        //elimina del mazo la cartas usadas
         for(let i=0; i<2; i++){
-            //elimina del mazo la cartas usadas
             mazo.shift();
         }
-        
-        console.log("--------------------------");
     }
     else{
         //Partida ya en curso
         cartasJugador = pedirCartas(1, mazo, cartasJugador);
         //elimina del mazo la cartas usadas
         mazo.shift();
-                //Debugging muestra cartas del jugador
-                /*for(let i=0; i<cartasJugador.length; i++){
-                    cartasJugador[i].preguntarPalo(this);
-                }
-                console.log("--------------------------");
-                */
     }
     puntosActual = sumarPuntos(cartasJugador);
-    
-    puntosActual = sumarPuntos(cartasJugador);
-    console.log(puntosActual);
-    //console.log("-------------------------");
     return cartasJugador;
 }
 //Funcion que controla cuando juega el crupier
@@ -124,12 +108,6 @@ function juegaCrupier(mazo, cartasCrupier, puntosJugador){
     if(cartasCrupier.length==0){
          // Entrega dos cartas para iniciar a jugar
          cartasCrupier = pedirCartas(1, mazo, cartasCrupier);   
-
-             //Debugging muestra cartas del jugador
-            /*console.log("------Carta Crupier-------");
-            cartasCrupier[0].preguntarPalo(this);
-            console.log("------------------------");*/
-
         //elimina del mazo la cartas usadas    
         mazo.shift();
         return cartasCrupier;
@@ -138,26 +116,20 @@ function juegaCrupier(mazo, cartasCrupier, puntosJugador){
     // Si el puntaje es menor a 21 pregunta al jugador si quiere plantarse o pide carta
     if(puntosCrupier<puntosJugador){
         while(puntosCrupier<17 && puntosCrupier<puntosJugador){
-            //console.clear();
             cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
             //elimina del mazo la cartas usadas
-            mazo.shift();
-
-                //Debugging muestra cartas del jugador
-                /*
-                console.log("--------------------------");
-                for(let i=0; i<cartasCrupier.length; i++){
-                    cartasCrupier[i].preguntarPalo(this);
-                }*/
-        
-            puntosCrupier = sumarPuntos(cartasCrupier);  
-            //console.log("--------------------------");
-
-           
-            
+            mazo.shift();      
+            puntosCrupier = sumarPuntos(cartasCrupier);
+            // Soluciona el problema de que el crupier sume 17 con un AS entre sus cartas
+            cartasCrupier.forEach ( (carta)=>{
+                if(puntosCrupier < puntosJugador && puntosCrupier>=17 && carta.numero==1){
+                    cartasCrupier = pedirCartas(1, mazo, cartasCrupier);
+                    mazo.shift();
+                    puntosCrupier = sumarPuntos(cartasCrupier);
+                }
+            });                      
         }
      }
-
     return cartasCrupier;
 }
 //Decide quien gana y muestra en pantalla el cartel del resultado
@@ -169,29 +141,24 @@ function eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde){
         if(puntosCrupier<=21){
             if(puntosCrupier>puntosJugador){
                 cartelGanaPierde.className="CartelGanaPierde CartelGana";
-                console.log("Gana la casa");
                 return 1;
             }
             if(puntosCrupier<puntosJugador){
                 cartelGanaPierde.className="CartelGanaPierde CartelPierde";
-                console.log("Pierde la casa");
                 return 2;
             }
             if(puntosCrupier===puntosJugador){
                 cartelGanaPierde.className="CartelGanaPierde CartelEmpate";
-                console.log("EMPATE ");
                 return 3;
             }
         }
         else{
-            console.log("Pierde la casa"); 
             cartelGanaPierde.className="CartelGanaPierde CartelPierde";
             return 2;
         }
     }
     else{
         cartelGanaPierde.className="CartelGanaPierde CartelGana";
-        console.log("Gana la casa");
         return 1;
     }
         
@@ -236,64 +203,38 @@ function actualizaCartas(mazoJugador,cartasCrupier,reiniciar, juegaCrupier){
     // Pregunta si el usuario apreto el boton Reiniciar 
     // reiniciar = 0 actualiza las cartas en tablero
     // reiniciar = 1 borra las cartas del tablero y devuelve la cantidad de figuras de cartas a 4 para el jugador y el crupier
+    // Cada vez que se llama a mueveCarta se le envian los siguientes parametros:
+    // mueveCartas(nodoCarta,X,Y,Z,rotate_X,rotate_Y,time)
+    //             CartaAMover: nodoCarta
+    //             X: vector ofset en X
+    //             Y: vector ofset en Y
+    //             Z: vector ofset en Z
+    //             rotate_X: vector rotate_X
+    //             rotate_Y: vector rotate_Y
+    //             time: tiempo de duracion de la animacion
     if(reiniciar==0){
         if(mazoJugador.length == 2 && cartasCrupier.length == 1){
             figuraJugador[0].className = "carta cartaJug" + " "+"cart"+mazoJugador[0].numero+"-"+mazoJugador[0].palo;
-            anime({
-                targets: figuraJugador[0],
-                translateX: [0, 100],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500,
-            }) 
+            mueveCartas(figuraJugador[0],[0, 100],[-1000, 0],[0,0],[0,0],[0,0],500);
             figuraJugador[1].className = "carta cartaJug" + " "+"cart"+mazoJugador[1].numero+"-"+mazoJugador[1].palo; 
-            anime({
-                targets: figuraJugador[1],
-                translateX: [0, -50],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500,
-            }) 
+            mueveCartas(figuraJugador[1],[0, -50],[-1000, 0],[0,0],[0,0],[0,0],500); 
         }
         else if(cartasCrupier.length == 1){
             const num = mazoJugador.length - 1;
             figuraJugador[num].className = "carta cartaJug" + " "+"cart"+mazoJugador[num].numero+"-"+mazoJugador[num].palo; 
-            anime({
-                targets: figuraJugador[num],
-                translateX: [0, -num*100*1.1],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500,
-            }) 
+            mueveCartas(figuraJugador[num],[0, -num*100*1.1],[-1000, 0],[0,0],[0,0],[0,0],500);
         }
         const num = cartasCrupier.length;
         for (let i = 1; i < num; i++) {
-            figuraCrupier[i].className = "carta cartaCrup" + " "+"cart"+cartasCrupier[i].numero+"-"+cartasCrupier[i].palo;
-            anime({
-                targets: figuraCrupier[i],
-                translateX: [0, -i*100*1.1],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500+i*100,
-            }) 	
+            figuraCrupier[i].className = "carta cartaCrup" + " "+"cart"+cartasCrupier[i].numero+"-"+cartasCrupier[i].palo;      
+            i==1? mueveCartas(figuraCrupier[i],[0, -50],[0, 0],[0,0],[0, 180],[0, 180],300) :
+                  mueveCartas(figuraCrupier[i],[0, -i*100*1.1],[-1000, 0],[0,0],[0,0],[0,0],500+i*100);
         }
         if(cartasCrupier.length==1 && juegaCrupier == 1){
             figuraCrupier[0].className = "carta cartaCrup" + " "+"cart"+cartasCrupier[0].numero+"-"+cartasCrupier[0].palo;
-            anime({
-                targets: figuraCrupier[0],
-                translateX: [0, 0],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500,
-            }) 	
+            mueveCartas(figuraCrupier[0],[0, 100],[-1000, 0],[0,0],[0,0],[0,0],500); 	
             figuraCrupier[1].className = "carta cartaCrup"+ " "+"backCarta";
-            anime({
-                targets: figuraCrupier[1],
-                translateX: [0, -100],
-                translateY: [-1000, 0],
-                easing: 'easeInOutQuad',
-                duration: 500,
-            }) 	
+            mueveCartas(figuraCrupier[1],[0, -50],[-1000, 0],[0,0],[0,0],[0,0],500); 		
         }   
     }
     else{
@@ -328,6 +269,19 @@ function actualizaCartas(mazoJugador,cartasCrupier,reiniciar, juegaCrupier){
                                 </div>`; 
     }
 }
+// Funcion que mueve las cartas de una posicion a otra utilizando la libreria Anime.js
+function mueveCartas(nodoCarta,X,Y,Z,rotate_X,rotate_Y,time){
+    anime({
+        targets: nodoCarta,
+        translateX: X,
+        translateY: Y,
+        translateZ: Z,
+        rotateX: rotate_X,
+        rotateY: rotate_Y,
+        easing: 'easeInOutQuad',
+        duration: time,
+    }) 
+}
 // La funcion actualiza los carteles de Saldo y Monto apostado
 function actualizarMontos(montoApostado,saldoActual){
     if(document.getElementsByClassName("cartel").length == 0){
@@ -354,6 +308,7 @@ function actualizarMontos(montoApostado,saldoActual){
 //si se envia -1 retorna el saldo actual
 function saldoLocalStorage(escribe) {
     let saldoActual;
+    //Se retorna el saldo actual
     if(escribe == -1){
         saldoActual = localStorage.getItem("saldo");
         if(saldoActual === null){
@@ -367,6 +322,7 @@ function saldoLocalStorage(escribe) {
         return saldoActual;
     }
     else{
+        //Se actualiza el saldo en el localStorage
         localStorage.setItem("saldo",escribe);
     }  
 }
@@ -385,6 +341,7 @@ function administrPago(){
 
     PAGAR.onclick = () => {
         if(parseInt(montoINPUT.value)>0){
+            //Cartel Confirmar Pago
             Swal.fire({
                 title: 'Confirmar Pago',
                 text: '¿Deseas confirmar el pago?',
@@ -430,7 +387,7 @@ let cartasJugador=[];
 // Revisa si tiene saldo anterior, sino lo pone en 0
 saldoLocalStorage(-1);
 // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
-//   Es correcto hacer esto o uso un Let y lo voy modificando?? 
+
 const botonPedir=document.getElementById("pedir");
 const botonDoblar=document.getElementById("doblar");
 const botonPlantarse=document.getElementById("plantarse");
@@ -472,7 +429,6 @@ botonApostar.innerHTML = 'Apostar';
 botonApostar.className = "botonApostar btn btn-danger";
 listaApuestas.appendChild(botonApostar);
 botonApostar.onclick = () => { 
-    console.log("onApostar click");
     mesaDeApuestas.className = " MesaDeApuestas container d-none ";
     mesaDeJuego.className = " container-fluid MesaDeJuego";
 }
@@ -507,15 +463,9 @@ botonDoblar.onclick = () => {
             saldoLocalStorage(saldoLocalStorage(-1)-montoApostado);
             actualizarMontos(montoApostado,saldoLocalStorage(-1));
             juegaJugador(mazo, cartasJugador);
-            actualizaCartas(cartasJugador,cartasCrupier,0,1);
+            actualizaCartas(cartasJugador,cartasCrupier,0,0);
             puntosJugador=sumarPuntos(cartasJugador);
-            if(puntosJugador>21){
-                ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde);
-            }
-            else{
-                //Se planta el jugador
-                botonPlantarse.onclick();
-            }
+            puntosJugador > 21 ? ganador = eligeGanador(puntosJugador,puntosCrupier,cartelGanaPierde) : botonPlantarse.onclick();
         }
         else{
             Swal.fire('Saldo insuficiente', '', 'error');
@@ -542,7 +492,6 @@ botonPlantarse.onclick = () => {
 //boton de reiniciar partida (solo funciona si la partida fue terminada)
 botonReiniciar.onclick = () => {
     if(ganador===1||ganador===2||ganador===3){
-
         switch(ganador){
             //GANA LA CASA
             case 1:
@@ -550,11 +499,10 @@ botonReiniciar.onclick = () => {
             //PIERDE LA CASA
             case 2:
                 saldoLocalStorage(saldoLocalStorage(-1)+ cantidadDeSaldosPagar * montoApostado);
-                console.log(cantidadDeSaldosPagar + " + " + montoApostado); 
                 break;
             //EMPATE
             case 3:
-                saldoLocalStorage(saldoLocalStorage(-1)+ (cantidadDeSaldosPagar-2) * montoApostado);
+                saldoLocalStorage(saldoLocalStorage(-1)+ (cantidadDeSaldosPagar-1) * montoApostado);
                 break;
         }    
         //Actualiza el cartel de saldo actual y apostado, sumandole o restandole la apuesta dependiendo del resultado
