@@ -65,25 +65,14 @@ function sumarPuntos(cartasJugador){
     // Busca las cartas que no son ASES y suma el valor de la carta al puntaje
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero>=2){
-            if(cartasJugador[i].numero>=10){
-                puntos+=10;
-            }
-            else{
-                puntos+=cartasJugador[i].numero; 
-            }
-            
+            cartasJugador[i].numero>=10 ? puntos+=10 : puntos+=cartasJugador[i].numero;   
         }
     }
     // Busca las cartas que son ASES y suma 11 si al sumar la carta el puntaje es 
     // menor a 21 , en caso contrario suma 1
     for(let i = 0 ; i<cartasJugador.length; i++){
         if(cartasJugador[i].numero==1){
-            if(puntos+11 <= 21){
-                puntos+=11;
-            }
-            else{
-                puntos++;
-            }
+            (puntos+11 <= 21)? puntos+=11: puntos++;
         }
     }
     return puntos;
@@ -315,6 +304,7 @@ function actualizarMontos(montoApostado,saldoActual){
 //Si se envida un valor numerico mayor a cero se lo guarda
 //si se envia -1 retorna el saldo actual
 function saldoLocalStorage(escribe) {
+    let saldoActual;
     if(escribe == -1){
         saldoActual = localStorage.getItem("saldo");
         if(saldoActual === null){
@@ -346,13 +336,30 @@ function administrPago(){
 
     PAGAR.onclick = () => {
         if(parseInt(montoINPUT.value)>0){
-            const saldoNuevo = saldoLocalStorage(-1) + parseInt(montoINPUT.value);
-            saldoLocalStorage(saldoNuevo);
-            saldoLABEL.innerHTML = `Saldo actual ${saldoNuevo}$$`;
-            montoINPUT.value = "";
+            Swal.fire({
+                title: 'Confirmar Pago',
+                text: '¿Deseas confirmar el pago?',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        Swal.fire('Pago confirmado', '', 'success');
+                        const saldoNuevo = saldoLocalStorage(-1) + parseInt(montoINPUT.value);
+                        saldoLocalStorage(saldoNuevo);
+                        saldoLABEL.innerHTML = `Saldo actual ${saldoNuevo}$$`;
+                        montoINPUT.value = "";
+                    }
+                    else{
+                        Swal.fire('Pago cancelado', '', 'error');
+                        montoINPUT.value = "";
+                    }
+                });
         }
         else{
             montoINPUT.value = "";  
+            Swal.fire('Pago cancelado', 'El monto ingresado no es valido', 'error');
         }    
     }
     CANCELAR.onclick = () => {
@@ -413,7 +420,7 @@ apuestas.forEach( (apuesta) => {
 actualizarMontos(montoApostado,saldoLocalStorage(-1));
 const botonApostar = document.createElement('button');
 botonApostar.innerHTML = 'Apostar';
-botonApostar.className = "botonApostar";
+botonApostar.className = "botonApostar btn btn-danger";
 listaApuestas.appendChild(botonApostar);
 botonApostar.onclick = () => { 
     console.log("onApostar click");
@@ -458,6 +465,9 @@ botonDoblar.onclick = () => {
                 //Se planta el jugador
                 botonPlantarse.onclick();
             }
+        }
+        else{
+            Swal.fire('Saldo insuficiente', '', 'error');
         }
     }
 
