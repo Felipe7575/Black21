@@ -18,9 +18,9 @@ La opción de **doblar** te permite doblar tu apuesta inicial
 
 ## Funcionamiento del programa
 ### Librerias utilizadas 
- - AnimeJs 3.2.1
- - SweetAlert
-
+ - AnimeJs 3.2.1: Se utilizo para la entrega de cartas durante el juego 
+ - SweetAlert: Se utilizo para los carteles de errores 
+### Funciones propias
 La función generarMazo es el encargado de generar un Mazo de cartas españolas, lo que corresponde a un vector de 52 cartas. Con 4 palos: las espadas, los diamantes, los tréboles y los corazones.
 Cada vez que se entrega una carta al Jugador o al Crupier, se borra una carta del Mazo.
 Al Jugador y al Crupier se le entregan cartas mediante la función pedirCartas(cantidadDeCartas, VectorMazo, VectorCartas). Esta función devuelve el vector enviados mas la cantidad de cartas pedidas:
