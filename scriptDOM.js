@@ -10,7 +10,7 @@ const menuDeBotones = document.getElementById("listaDeBotones");
 const cartelCargarDinero = document.getElementById("credit-card-div");
 const mesaDeApuestas = document.getElementById("mesaDeApuestas");
 const mesaDeJuego = document.getElementById("mesaDeJuego");
-const formTarjeta = document.getElementById("collapseExample");
+const  formTarjeta = document.getElementById("collapseExample");
 
 
 // Funcion que cambia entre mesa de apuestas y mesa de juego
