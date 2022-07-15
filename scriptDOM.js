@@ -168,18 +168,38 @@ function actualizarMontos(montoApostado,saldoActual){
         const div = document.createElement("div");
         div.className   = "contenedorSaldos";
         const cartelSaldo = document.createElement("h3");
-        cartelSaldo.innerHTML = `Saldo actual ${saldoActual}$$`;
+        cartelSaldo.innerHTML = `Saldo actual:   <h1 id="saldoViejo"> ${saldoActual} </h1>$$`;
         cartelSaldo.className = "cartel";
         cartelSaldo.id = "cartelSaldo";
         const cartelApostando = document.createElement("h3");
-        cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
+        cartelApostando.innerHTML = `Saldo apostado:   <h1 id="apostadoViejo">  ${montoApostado} </h1>$$`;
         cartelApostando.className = "cartel";
         cartelApostando.id = "cartelApostando";
         div.append(cartelSaldo,cartelApostando);
         listaApuestas.append(div); 
     }
-    let cartel = document.getElementById("cartelSaldo");
-    cartel.innerHTML = `Saldo actual ${saldoActual}$$`;
-    cartel = document.getElementById("cartelApostando");
-    cartelApostando.innerHTML = `Saldo apostado ${montoApostado}$$`;
+    const saldoViejo = document.getElementById("saldoViejo");
+    const apostadoViejo = document.getElementById("apostadoViejo");
+    
+    let viejo = parseInt(saldoViejo.innerHTML);
+    if(viejo != saldoActual){
+        //saldoViejo.innerHTML = saldoActual;
+        
+        anime({
+            targets: saldoViejo,
+            innerHTML: [viejo,saldoActual],
+            round: 1,
+            easing: 'easeInOutExpo'
+          });
+    }
+    viejo = parseInt(apostadoViejo.innerHTML);
+    if(viejo != montoApostado){
+        //apostadoViejo.innerHTML = montoApostado;     
+        anime({
+            targets: apostadoViejo,
+            innerHTML: [viejo, montoApostado],
+            round: 1,
+            easing: 'easeInOutExpo'
+          });
+    }    
 }

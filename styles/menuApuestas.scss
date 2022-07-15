@@ -35,7 +35,10 @@
         .cartel{
             width: auto;
             font-size: 40px;
+            display: flex;
+            flex-wrap: nowrap;
         }
+        
     }
     
     
