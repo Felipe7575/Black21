@@ -1,6 +1,8 @@
 @import './backCartas.scss';
 @import './tarjetaCredito.scss';
 @import './menuApuestas.scss';
+@import './dolar.scss';
+
 
 *{
     padding: 0;
@@ -12,13 +14,14 @@ body{
     background-color: rgb(240, 234, 234);
     background-image: url("../assets/images/wepik--2022530-10208.png");
     display: flex;
+    flex-direction: column;
     align-content: space-around;
     flex-wrap: nowrap;
 }
 
 .MesaDeJuego, .MesaDeApuestas{ 
     width: 100%;
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

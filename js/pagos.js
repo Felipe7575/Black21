@@ -1,8 +1,7 @@
+//Scripts relacionados con los saldos, apuestas, medios de pago y el localStorage
+
 //Funcion que maneja el localStorage item Saldo
 //Si se envida un valor numerico mayor a cero se lo guarda
-
-
-
 //si se envia -1 retorna el saldo actual
 function saldoLocalStorage(escribe) {
     let saldoActual;
@@ -82,7 +81,7 @@ function administrPago(){
     }
 }
 
-
+//Simula el Api de pago, en promedio 2 de cada 10 pagos son rechazados
 function APIdePago (){
     return new Promise ((resolve, reject) => {
         Swal.fire({
@@ -91,7 +90,7 @@ function APIdePago (){
                 Swal.showLoading();
             }
         });
-        if(Math.random() > 0.4){
+        if(Math.random() > 0.2){
                 setTimeout(()=>{
                     resolve();
                 },1000);

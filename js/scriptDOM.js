@@ -1,3 +1,5 @@
+//Scripts que modifican el DOM de la pagina web 
+
 
 // -----------------BUSCA LOS ELEMENTOS DEL DOM QUE SE ALTERAN DURANTE EL JUEGO---------------------------------------------------
 const botonPedir=document.getElementById("pedir");
