@@ -222,8 +222,7 @@ botonApostar.onclick = () => {
     // Reinicia el DOM (Oculta la mesa de apuesta y muestra la mesa de juego)
     cambiaMesaJuego_Apuesta(false);
 }
-// GENERNERA LOS EVENT LISTENER DE LOS PAGOS
-administrPago();
+
 
 //-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
 generarMazo(mazo, cantidadDeMazos);

@@ -9,7 +9,6 @@ const botonReiniciar=document.getElementById("reiniciar");
 const cartelGanaPierde=document.getElementById("GanaPierde");
 const menuDeApuestas = document.getElementById("listaApuestas");
 const menuDeBotones = document.getElementById("listaDeBotones");
-const cartelCargarDinero = document.getElementById("credit-card-div");
 const mesaDeApuestas = document.getElementById("mesaDeApuestas");
 const mesaDeJuego = document.getElementById("mesaDeJuego");
 const formTarjeta = document.getElementById("collapseExample");
@@ -19,7 +18,7 @@ const formTarjeta = document.getElementById("collapseExample");
 function cambiaMesaJuego_Apuesta (modo){
     if(modo){
         cartelGanaPierde.className="CartelGanaPierdeHide ";
-        cartelCargarDinero.className = "credit-card-div";
+       
         mesaDeApuestas.className = "MesaDeApuestas container align-items-center";
         mesaDeJuego.className = " container-fluid MesaDeJuego d-none";
         formTarjeta.className = "collapse";
