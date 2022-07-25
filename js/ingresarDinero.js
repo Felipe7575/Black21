@@ -1,4 +1,3 @@
-g
 //Funcion que administra los ingresos de saldo 
 function administrPago(){
     const montoINPUT = document.getElementById("montoDepositar");
@@ -13,6 +12,7 @@ function administrPago(){
     const saldoLABEL = document.getElementById("cartelSaldo");
 
     PAGAR.onclick = () => {
+        event.preventDefault();
         if(parseInt(montoINPUT.value)>0){
             //Cartel Confirmar Pago
             Swal.fire({

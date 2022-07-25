@@ -1,5 +1,4 @@
 @import './backCartas.scss';
-@import './tarjetaCredito.scss';
 @import './menuApuestas.scss';
 @import './dolar.scss';
 
@@ -26,7 +25,11 @@ body{
     flex-direction: column;
     justify-content: space-around;
 }
+.MesaDeApuestas{
+    position: relative;
+    bottom: -40vh;
 
+}
 .mesaJugador,.mesaCrup{
     width: fit-content;
     max-height: 100vh;
@@ -39,7 +42,7 @@ body{
 
 
 .carta{
-    height: 35vh;
+    height: 32vh;
     aspect-ratio: 251/351;
     background-size:cover;
 }
@@ -65,5 +68,8 @@ body{
  .CartelEmpate{
     background-image: url("../assets/images/Empate-01.png");   
  }
+ .separador{
+    height: 100px;
+}
 
 

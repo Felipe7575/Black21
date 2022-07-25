@@ -4,6 +4,7 @@
   "main": "script.js",
   "scripts": {
     "start": "sass ./styles/style.scss ./styles/estilos.css -w --no-source-map -s compressed"
+    
   },
   "author": "",
   "license": "ISC",

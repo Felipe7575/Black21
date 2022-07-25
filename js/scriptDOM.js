@@ -21,7 +21,6 @@ function cambiaMesaJuego_Apuesta (modo){
        
         mesaDeApuestas.className = "MesaDeApuestas container align-items-center";
         mesaDeJuego.className = " container-fluid MesaDeJuego d-none";
-        formTarjeta.className = "collapse";
     }
     else{
         mesaDeApuestas.className = " MesaDeApuestas container d-none ";

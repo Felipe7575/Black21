@@ -1,3 +1,25 @@
+@import './dolar.scss';
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    
+    background-color: rgb(240, 234, 234);
+    background-image: url("../assets/images/wepik--2022530-10208.png");
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: nowrap;
+}
+
+
+.contenedorTarjeta{
+    width: fit-content;
+}
 .credit-card-div  span { padding-top:10px; }
 .credit-card-div img { padding-top:30px;  width: 100%; }
 .credit-card-div .small-font { font-size:9px; }
