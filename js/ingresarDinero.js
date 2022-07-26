@@ -1,5 +1,4 @@
-//Funcion que administra los ingresos de saldo 
-function administrPago(){
+
     const montoINPUT = document.getElementById("montoDepositar");
     const numeroTarjetaINPUT = document.getElementById("numeroTarjeta");
     const mesINPUT = document.getElementById("MM");
@@ -54,7 +53,7 @@ function administrPago(){
         ccvINPUT.value = "";
         nombreINPUT.value = "";
     }
-}
+
 
 //Simula el Api de pago, en promedio 2 de cada 10 pagos son rechazados
 function APIdePago (){
@@ -80,5 +79,6 @@ function APIdePago (){
     ); 
 }
 
-administrPago();
+
+
 
