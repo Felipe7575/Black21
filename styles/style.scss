@@ -11,12 +11,19 @@
 }
 body{
     background-color: rgb(240, 234, 234);
-    background-image: url("../assets/images/wepik--2022530-10208.png");
+    height: 100vh;
+    background-image: url("../assets/images/FONDO7.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
     display: flex;
     flex-direction: column;
     align-content: space-around;
     flex-wrap: nowrap;
+    
 }
+
+
+
 
 .MesaDeJuego, .MesaDeApuestas{ 
     width: 100%;

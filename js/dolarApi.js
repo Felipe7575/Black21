@@ -14,6 +14,6 @@ fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales").then(respon
                 h2.innerHTML += `<span class="cot${i}">${nombre} :  ${compra} </span>  `;
         }
         h2.className = "primero";
-        etiqueta.appendChild(h2);
+        etiqueta.innerHTML=h2.outerHTML;
 
     });

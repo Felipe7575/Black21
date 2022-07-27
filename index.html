@@ -8,7 +8,7 @@
     <title>Black21</title>
     
 </head>
-<body>
+<body id="FONDO">
     <div class="separador"></div>
     <!--  PLANTILLA DE BOOTSTRAP PARA EL NAV-->
     <nav class="navbar navbar-dark bg-dark fixed-top">
@@ -41,8 +41,11 @@
       </nav>
     <!--  FIN DE PLANTILLA DE BOOTSTRAP PARA EL NAV-->
     <!-- COTIZACION DEL DOLAR -->
-    <div id="tag_cotiza">
-    
+    <div>
+      <h2 class="primero" id="tag_cotiza">
+        <span class="cot0">Dolar Oficial :  --------- </span>  
+        <span class="cot1">Dolar Blue :  --------- </span>  
+      </h2>
     </div>
     <!-- MESA DE JUEGO -->
     <div class="container-fluid MesaDeJuego d-none" id="mesaDeJuego">
@@ -104,12 +107,10 @@
                 
         </div>
     </div>
-        
-    
+
     
     <!-- JavaScript -->
     <script src="./js/scriptDOM.js"></script>
-    <script src="./js/pagos.js"></script>
     <script src="./js/dolarApi.js"></script>
     <script src="./js/script.js"></script>
     
