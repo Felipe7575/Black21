@@ -1,7 +1,6 @@
 # Black JACK
 
-## Deployment en Versel 
-https://black21-felipe7575.vercel.app/
+
 
 ## Introducción
 El proyecto pretende hacer un simulador de Black Jack, mediante el uso de JavaScript, HTML y Sass.
