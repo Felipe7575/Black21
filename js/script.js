@@ -14,7 +14,7 @@ Hasta el momento el simulador permite:
 
 
 
-const palos = ["♠︎ ","♣︎","♥︎","♦︎"];
+const palos = ["P","T","C","D"];
 let barajaOriginal=[];
 
 class cartas{
@@ -212,7 +212,11 @@ apuestas.forEach( (apuesta) => {
             });
         }
     }
-}); 
+});
+
+
+
+
 actualizarMontos(montoApostado,saldoLocalStorage(-1));
 const botonApostar = document.createElement('button');
 botonApostar.innerHTML = 'Apostar';
@@ -226,6 +230,24 @@ botonApostar.onclick = () => {
 
 //-----------------------APARTIR DE ACA INICIA LAS PARTIDAS--------------------------------------------------
 generarMazo(mazo, cantidadDeMazos);
+//Precarga las cartas con url ../assets/images/CartasPoker con nomenclatura carta_numero_palo.png
+precargaCartas(mazo);
+//Funcion precargaCartas(mazo)
+function precargaCartas(mazo){
+    mazo.forEach( (carta) => {
+        const cartaImagen = document.createElement("img");
+        if(carta.numero==1){
+            cartaImagen.src = "../assets/images/CartasPoker/"+"A"+palos[carta.palo]+".png";
+        }
+        else{
+            cartaImagen.src = "../assets/images/CartasPoker/"+carta.numero+""+palos[carta.palo]+".png";
+        }
+        cartaImagen.className = "carta";
+        cartaImagen.id = carta.numero+"_"+carta.palo;
+    }
+    );}
+
+
 cartasCrupier = juegaCrupier(mazo, cartasCrupier,puntosJugador);
 
 //Boton de pedir (solo funciona si el jugador no a tocado el boton de plantarse)
